@@ -1,0 +1,353 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.screen{display:none;padding:2rem 0;}
+.screen.active{display:block;}
+.wrap{max-width:540px;margin:0 auto;padding:0 1.25rem;}
+h1{font-size:26px;font-weight:500;color:var(--color-text-primary);line-height:1.2;margin-bottom:0.4rem;}
+h2{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:0.75rem;}
+.muted{font-size:14px;color:var(--color-text-secondary);line-height:1.55;}
+.field{margin-bottom:1.1rem;}
+.field>label{display:block;font-size:12px;color:var(--color-text-secondary);margin-bottom:5px;font-weight:500;}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.4rem;}
+.trick-big{font-size:28px;font-weight:500;color:var(--color-text-primary);margin:0.5rem 0 0.15rem;line-height:1.1;}
+.method-label{font-size:15px;font-weight:500;color:var(--color-text-secondary);margin-bottom:0.9rem;}
+.badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:99px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);}
+.badge+.badge{margin-left:5px;}
+.info-row{font-size:13px;color:var(--color-text-secondary);line-height:1.5;}
+.info-row span{font-weight:500;color:var(--color-text-primary);}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:0.85rem 0;}
+.meta-row{display:flex;gap:1.5rem;}
+.meta-item{font-size:12px;color:var(--color-text-secondary);}
+.meta-item b{font-weight:500;color:var(--color-text-primary);}
+.steps-btn{font-size:12px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;padding:0;margin-top:0.85rem;}
+.steps-box{margin-top:0.7rem;font-size:13px;color:var(--color-text-secondary);line-height:1.65;border-left:1.5px solid var(--color-border-tertiary);padding-left:12px;display:none;}
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:1rem;}
+.btn{padding:12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:13px;font-weight:500;cursor:pointer;background:transparent;color:var(--color-text-primary);}
+.btn:hover{background:var(--color-background-secondary);}
+.btn-black{background:var(--color-text-primary)!important;color:var(--color-background-primary)!important;border-color:var(--color-text-primary)!important;}
+.btn-black:hover{opacity:0.85;}
+.btn-ghost{color:var(--color-text-secondary);border-color:var(--color-border-tertiary);}
+.prog{height:1.5px;background:var(--color-border-tertiary);border-radius:1px;margin-bottom:1.4rem;}
+.prog-fill{height:100%;background:var(--color-text-primary);border-radius:1px;transition:width 0.3s;}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{padding:6px 13px;border-radius:99px;border:0.5px solid var(--color-border-secondary);font-size:13px;cursor:pointer;color:var(--color-text-secondary);user-select:none;}
+.chip.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:1.2rem 0;}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;}
+.stat-n{font-size:30px;font-weight:500;color:var(--color-text-primary);}
+.stat-l{font-size:12px;color:var(--color-text-secondary);margin-top:2px;}
+.helpful-row{padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;color:var(--color-text-primary);}
+.helpful-row .trick-bit{font-weight:500;}
+.helpful-row .method-bit{color:var(--color-text-secondary);}
+.logo{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.04em;margin-bottom:1.5rem;}
+</style>
+
+<div id="s1" class="screen active">
+<div class="wrap">
+  <div class="logo">Dog training evaluator</div>
+  <h1>About your dog</h1>
+  <p class="muted" style="margin-bottom:1.8rem;">We'll show you training methods one by one. You mark what works — building a labelled dataset for model training.</p>
+  <div class="field"><label>Dog's name (optional)</label><input type="text" id="dName" placeholder="e.g. Rex" style="width:100%;"/></div>
+  <div class="field"><label>Breed</label><input type="text" id="dBreed" placeholder="Type to search..." list="bList" style="width:100%;"/><datalist id="bList"></datalist></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div class="field"><label>Age — years</label><input type="number" id="aY" min="0" max="20" value="2" style="width:100%;"/></div>
+    <div class="field"><label>Age — months</label><input type="number" id="aM" min="0" max="11" value="0" style="width:100%;"/></div>
+  </div>
+  <div class="field"><label>Your training experience</label>
+    <select id="exp" style="width:100%;">
+      <option value="1">Beginner — first dog or just starting</option>
+      <option value="2" selected>Intermediate — trained before</option>
+      <option value="3">Expert — professional or very experienced</option>
+    </select>
+  </div>
+  <div class="field"><label>What motivates your dog?</label>
+    <div class="chips" id="motiv">
+      <span class="chip on" data-v="food">Food / treats</span>
+      <span class="chip" data-v="play">Play / toys</span>
+      <span class="chip" data-v="praise">Praise / voice</span>
+      <span class="chip" data-v="clicker">Clicker</span>
+    </div>
+  </div>
+  <div class="field"><label>Difficulty levels to include</label>
+    <div class="chips" id="diffs">
+      <span class="chip on" data-v="Beginner">Beginner</span>
+      <span class="chip on" data-v="Intermediate">Intermediate</span>
+      <span class="chip" data-v="Advanced">Advanced</span>
+    </div>
+  </div>
+  <button class="btn btn-black" onclick="startSession()" style="width:100%;padding:14px;font-size:14px;margin-top:0.5rem;">Start evaluating methods →</button>
+</div>
+</div>
+
+<div id="s2" class="screen">
+<div class="wrap">
+  <div class="top-bar">
+    <span id="pTxt" style="font-size:12px;color:var(--color-text-secondary);">1 / 1</span>
+    <button onclick="goResults()" style="font-size:12px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;">Finish early</button>
+  </div>
+  <div class="prog"><div class="prog-fill" id="pFill" style="width:0%;"></div></div>
+  <div class="card">
+    <div><span class="badge" id="cCat">—</span><span class="badge" id="cDiff">—</span></div>
+    <p class="trick-big" id="cTrick">—</p>
+    <p class="method-label" id="cMethod">—</p>
+    <p class="info-row"><span>Best for: </span><span id="cBest">—</span></p>
+    <div class="divider"></div>
+    <div class="meta-row">
+      <div class="meta-item" id="cPre">—</div>
+      <div class="meta-item" id="cTime">—</div>
+      <div class="meta-item" id="cReward">—</div>
+    </div>
+    <button class="steps-btn" id="sBtn" onclick="toggleSteps()">Show step-by-step instructions</button>
+    <div class="steps-box" id="sBox"></div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-black" onclick="rate('useful')">Helpful</button>
+    <button class="btn" onclick="rate('not_useful')">Not helpful</button>
+    <button class="btn btn-ghost" onclick="rate('skip')">Skip</button>
+  </div>
+  <p style="font-size:11px;color:var(--color-text-secondary);text-align:center;margin-top:1rem;" id="dLabel"></p>
+</div>
+</div>
+
+<div id="s3" class="screen">
+<div class="wrap">
+  <h1>Session complete</h1>
+  <p class="muted" style="margin-top:0.3rem;" id="sSummary"></p>
+  <div class="stat-grid" id="sStats"></div>
+  <div style="margin:1.5rem 0;">
+    <h2>Marked as helpful</h2>
+    <div id="sHelp"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+    <button class="btn" onclick="exportCSV()" style="padding:13px;font-size:13px;">Export dataset (CSV)</button>
+    <button class="btn btn-black" onclick="newSess()" style="padding:13px;font-size:13px;">New session</button>
+  </div>
+  <p style="font-size:11px;color:var(--color-text-secondary);margin-top:1.2rem;line-height:1.65;">The CSV includes breed, age, experience, trick difficulty, method name, and your rating — ready for ML training. All sessions are stored and merged on each export.</p>
+  <button onclick="toggleAll()" style="font-size:12px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;margin-top:1rem;text-decoration:underline;">View all stored data</button>
+  <div id="allArea" style="display:none;margin-top:0.75rem;"></div>
+</div>
+</div>
+
+<script>
+const BREEDS=["Labrador Retriever","German Shepherd","Golden Retriever","French Bulldog","Bulldog","Poodle","Beagle","Rottweiler","German Shorthaired Pointer","Dachshund","Pembroke Welsh Corgi","Australian Shepherd","Yorkshire Terrier","Boxer","Siberian Husky","Great Dane","Doberman Pinscher","Miniature Schnauzer","Cavalier King Charles Spaniel","Shih Tzu","Boston Terrier","Pomeranian","Havanese","Shetland Sheepdog","Bernese Mountain Dog","Vizsla","Border Collie","Weimaraner","Cocker Spaniel","Maltese","Basenji","Akita","Alaskan Malamute","American Bulldog","American Eskimo","Australian Cattle Dog","Basset Hound","Belgian Malinois","Bichon Frise","Bloodhound","Border Terrier","Bull Terrier","Cairn Terrier","Cane Corso","Chow Chow","Collie","Dalmatian","English Setter","English Springer Spaniel","Fox Terrier","Giant Schnauzer","Greyhound","Irish Setter","Jack Russell Terrier","Keeshond","Leonberger","Lhasa Apso","Mastiff","Newfoundland","Norwegian Elkhound","Old English Sheepdog","Papillon","Pekingese","Pointer","Portuguese Water Dog","Pug","Rhodesian Ridgeback","Saint Bernard","Samoyed","Scottish Terrier","Soft Coated Wheaten Terrier","Staffordshire Bull Terrier","Standard Schnauzer","West Highland White Terrier","Whippet","Afghan Hound","Airedale Terrier","Chihuahua","Chinese Shar-Pei","Dogo Argentino","Dutch Shepherd","Finnish Lapphund","German Pinscher","Greater Swiss Mountain Dog","Italian Greyhound","Japanese Chin","Lancashire Heeler","Leonberger","Miniature Pinscher","Papillon","Parson Russell Terrier","Plott Hound","Puli","Rat Terrier","Redbone Coonhound","Scottish Deerhound","Silky Terrier","Tibetan Mastiff","Toy Poodle","Welsh Terrier","Wirehaired Pointing Griffon","Mixed Breed / Unknown"];
+const BT={"Labrador Retriever":{tr:5,iq:4,en:5,st:2,se:7,sz:"Large"},"German Shepherd":{tr:5,iq:5,en:4,st:4,se:8,sz:"Large"},"Golden Retriever":{tr:5,iq:4,en:4,st:2,se:8,sz:"Large"},"French Bulldog":{tr:3,iq:3,en:2,st:6,se:7,sz:"Small"},"Bulldog":{tr:2,iq:2,en:2,st:7,se:5,sz:"Medium"},"Poodle":{tr:5,iq:5,en:4,st:3,se:8,sz:"Medium"},"Beagle":{tr:3,iq:3,en:4,st:7,se:6,sz:"Small"},"Rottweiler":{tr:4,iq:4,en:3,st:5,se:6,sz:"Large"},"Dachshund":{tr:2,iq:3,en:3,st:8,se:6,sz:"Small"},"Pembroke Welsh Corgi":{tr:5,iq:4,en:4,st:4,se:7,sz:"Small"},"Australian Shepherd":{tr:5,iq:5,en:5,st:3,se:8,sz:"Medium"},"Yorkshire Terrier":{tr:3,iq:4,en:3,st:7,se:7,sz:"Tiny"},"Boxer":{tr:3,iq:4,en:4,st:5,se:7,sz:"Large"},"Siberian Husky":{tr:3,iq:4,en:5,st:6,se:6,sz:"Medium"},"Great Dane":{tr:4,iq:3,en:3,st:3,se:6,sz:"Giant"},"Doberman Pinscher":{tr:5,iq:5,en:4,st:4,se:8,sz:"Large"},"Miniature Schnauzer":{tr:4,iq:4,en:3,st:6,se:7,sz:"Small"},"Cavalier King Charles Spaniel":{tr:4,iq:3,en:3,st:2,se:9,sz:"Small"},"Shih Tzu":{tr:3,iq:3,en:2,st:6,se:7,sz:"Small"},"Border Collie":{tr:5,iq:5,en:5,st:2,se:8,sz:"Medium"},"Belgian Malinois":{tr:5,iq:5,en:5,st:3,se:7,sz:"Large"},"Basenji":{tr:2,iq:4,en:4,st:8,se:7,sz:"Small"},"Australian Cattle Dog":{tr:4,iq:5,en:5,st:4,se:7,sz:"Medium"},"Chow Chow":{tr:2,iq:3,en:2,st:9,se:6,sz:"Medium"},"Vizsla":{tr:4,iq:4,en:5,st:3,se:9,sz:"Large"},"Weimaraner":{tr:4,iq:4,en:5,st:3,se:7,sz:"Large"},"Akita":{tr:3,iq:4,en:3,st:7,se:6,sz:"Large"},"Shetland Sheepdog":{tr:5,iq:5,en:4,st:3,se:9,sz:"Small"},"Bernese Mountain Dog":{tr:4,iq:3,en:3,st:3,se:8,sz:"Large"},"German Shorthaired Pointer":{tr:4,iq:4,en:5,st:3,se:7,sz:"Large"}};
+const TRICKS=[
+{id:1,name:"Sit",cat:"Basic Obedience",diff:"Beginner",pre:"",reward:"Treat + Praise",time:"1-3 days",notes:"Foundation trick. Short 5-min sessions."},
+{id:2,name:"Stay",cat:"Basic Obedience",diff:"Beginner",pre:"Sit",reward:"Treat + Verbal Praise",time:"3-7 days",notes:"Proof in many environments before relying on it."},
+{id:3,name:"Come (Recall)",cat:"Basic Obedience",diff:"Beginner",pre:"",reward:"High-value treat + Jackpot",time:"1-2 weeks",notes:"Never punish a dog for coming, even if late."},
+{id:4,name:"Down",cat:"Basic Obedience",diff:"Beginner",pre:"Sit",reward:"Treat + Praise",time:"2-5 days",notes:"Some dominant dogs resist. Take it slow."},
+{id:5,name:"Shake Hands / Paw",cat:"Fun Tricks",diff:"Beginner",pre:"Sit",reward:"Treat + Praise",time:"1-3 days",notes:"Extend to 'Other Paw' as a second trick."},
+{id:6,name:"Spin / Twirl",cat:"Fun Tricks",diff:"Beginner",pre:"",reward:"Treat",time:"2-5 days",notes:"Teach both left and right directions."},
+{id:7,name:"Rollover",cat:"Fun Tricks",diff:"Intermediate",pre:"Down",reward:"High-value treat",time:"1-2 weeks",notes:"Some dogs dislike exposing belly — respect this."},
+{id:8,name:"Play Dead / Bang",cat:"Fun Tricks",diff:"Intermediate",pre:"Down, Rollover",reward:"High-value treat",time:"1-2 weeks",notes:"Teach a distinct release cue."},
+{id:9,name:"Fetch",cat:"Basic Obedience",diff:"Beginner",pre:"",reward:"Play + Treat",time:"1-4 weeks",notes:"Not all breeds retrieve naturally."},
+{id:10,name:"Leave It",cat:"Basic Obedience",diff:"Beginner",pre:"",reward:"High-value treat",time:"3-7 days",notes:"Safety skill. Proof with food, dogs, wildlife."},
+{id:11,name:"Heel / Loose Leash Walking",cat:"Basic Obedience",diff:"Intermediate",pre:"Sit, Focus/Watch Me",reward:"Treats + Life rewards",time:"2-6 weeks",notes:"Every walk is a training opportunity."},
+{id:12,name:"Focus / Watch Me",cat:"Basic Obedience",diff:"Beginner",pre:"",reward:"Treat",time:"1-3 days",notes:"Foundation for all distracting environments."},
+{id:13,name:"Place / Go to Mat",cat:"Basic Obedience",diff:"Intermediate",pre:"Down",reward:"Treat + Release word",time:"1-2 weeks",notes:"Useful for settling during meals or guests."},
+{id:14,name:"Jump Through Hoop",cat:"Agility / Sport",diff:"Intermediate",pre:"Sit, Come",reward:"High-value treat",time:"1-2 weeks",notes:"Joint health first. No jumping for puppies under 1 yr."},
+{id:15,name:"Weave Between Legs",cat:"Fun Tricks",diff:"Intermediate",pre:"Focus, Sit",reward:"Treat",time:"1-3 weeks",notes:"Small dogs often find this easier."},
+{id:16,name:"Speak / Bark on Cue",cat:"Fun Tricks",diff:"Intermediate",pre:"",reward:"Treat + Excited praise",time:"3-7 days",notes:"Always teach 'Quiet' alongside Speak."},
+{id:17,name:"Quiet / Stop Barking",cat:"Basic Obedience",diff:"Intermediate",pre:"Speak (optional)",reward:"High-value treat",time:"1-3 weeks",notes:"Address the underlying cause first."},
+{id:18,name:"Back Up",cat:"Fun Tricks",diff:"Intermediate",pre:"Sit, Stay",reward:"Treat",time:"3-7 days",notes:"Useful for door manners and tight spaces."},
+{id:19,name:"High Five",cat:"Fun Tricks",diff:"Beginner",pre:"Shake / Paw",reward:"Treat + Praise",time:"1-3 days",notes:"Teach Wave as the next extension."},
+{id:20,name:"Wave",cat:"Fun Tricks",diff:"Intermediate",pre:"High Five",reward:"Treat",time:"3-7 days",notes:"Great for photos and greetings."},
+{id:21,name:"Bow / Take a Bow",cat:"Fun Tricks",diff:"Beginner",pre:"",reward:"Treat + Praise",time:"2-5 days",notes:"Easy and very impressive-looking."},
+{id:22,name:"Name Recognition",cat:"Basic Obedience",diff:"Beginner",pre:"",reward:"Treat + Happy voice",time:"1-3 days",notes:"First thing to teach any new dog."},
+{id:23,name:"Go Potty on Cue",cat:"Basic Obedience",diff:"Beginner",pre:"",reward:"Jackpot treat",time:"2-4 weeks",notes:"Incredibly useful for travel and bad weather."},
+{id:24,name:"Find It / Nose Work",cat:"Enrichment / Sport",diff:"Beginner",pre:"",reward:"High-value treat",time:"1 week",notes:"Mental enrichment. Great for anxious dogs."},
+{id:25,name:"Balance Treat on Nose",cat:"Fun Tricks",diff:"Intermediate",pre:"Stay, Focus",reward:"The treat itself",time:"1-3 weeks",notes:"Excellent impulse control exercise."},
+{id:26,name:"Skateboard / Ride Object",cat:"Advanced Tricks",diff:"Advanced",pre:"Paw targeting",reward:"High-value treat",time:"2-6 weeks",notes:"Break into very tiny steps."},
+{id:27,name:"Open/Close Door",cat:"Advanced Tricks",diff:"Advanced",pre:"Paw targeting, Nose targeting",reward:"High-value treat",time:"3-6 weeks",notes:"Practical service dog skill."},
+{id:28,name:"Carry Items",cat:"Practical Skills",diff:"Intermediate",pre:"Fetch basics",reward:"Treat + Praise",time:"1-3 weeks",notes:"Useful for newspaper, mail, small objects."},
+{id:29,name:"Tidy Up Toys",cat:"Advanced Tricks",diff:"Advanced",pre:"Fetch, Drop It, Carry",reward:"Jackpot reward",time:"4-8 weeks",notes:"One of the most impressive functional tricks."},
+{id:30,name:"Identify Named Objects",cat:"Advanced Tricks",diff:"Advanced",pre:"Fetch, basic object interaction",reward:"Jackpot treat",time:"6-12 weeks",notes:"Border Collies can learn 1000+ names."},
+{id:31,name:"Limp / Fake Injury",cat:"Fun Tricks",diff:"Advanced",pre:"Shake/Paw, Heel",reward:"High-value treat",time:"3-6 weeks",notes:"Comedy trick. Very slow process."},
+{id:32,name:"Army Crawl",cat:"Fun Tricks",diff:"Intermediate",pre:"Down",reward:"High-value treat",time:"1-3 weeks",notes:"Lure along the floor with tiny increments."}
+];
+const METHODS=[
+{t:"Sit",n:"Lure Method",b:"All breeds, especially beginners",s:"1. Hold treat above nose. 2. Move treat slowly back over head. 3. Dog's bottom naturally lowers. 4. Say 'Sit' as bottom touches ground. 5. Reward immediately. 6. Repeat 5-10x per session."},
+{t:"Sit",n:"Capture Method",b:"Intelligent, independent breeds (Chow, Basenji)",s:"1. Wait for dog to naturally sit. 2. Say 'Yes!' and reward the moment it sits. 3. Add cue 'Sit' as dog begins to lower. 4. Gradually reward only when cued. 5. Practice in various locations."},
+{t:"Sit",n:"Shaping Method",b:"High-intelligence breeds (Border Collie, Poodle)",s:"1. Use clicker or marker 'Yes'. 2. Click any backward hip movement. 3. Gradually require more of the sit motion. 4. Click only full sit. 5. Add verbal cue. 6. Fade lure over time."},
+{t:"Sit",n:"Physical Guidance (Gentle Push)",b:"Stubborn or low-energy breeds (Bulldog, Basset)",s:"1. Stand in front of dog. 2. Gently press down on hindquarters. 3. Say 'Sit' simultaneously. 4. Reward immediately when seated. 5. Reduce pressure over sessions."},
+{t:"Stay",n:"3D Method (Duration-Distance-Distraction)",b:"All breeds — build in order",s:"1. Ask for Sit. 2. Say 'Stay', wait 2 seconds, reward. 3. Increase duration before adding distance. 4. Add 1 step back, return, reward. 5. Never add distraction until duration + distance are solid."},
+{t:"Stay",n:"Release Word Method",b:"Eager breeds (Labs, Goldens, Springers)",s:"1. Sit dog. 2. Say 'Stay' with open palm signal. 3. Release with 'OK!' or 'Free!'. 4. Reward the stay, not the release. 5. Gradually extend time."},
+{t:"Stay",n:"Patience Shaping",b:"Stubborn breeds (Beagle, Dachshund, Terriers)",s:"1. Ask for Sit. 2. Do NOT say Stay yet. 3. Reward dog for staying seated briefly. 4. Add 'Stay' cue only after dog naturally waits. 5. Build value in the position first."},
+{t:"Stay",n:"Proofing Method",b:"Highly trainable breeds (GSD, Malinois, Poodle)",s:"1. Once basic stay solid, introduce distractions systematically. 2. Start mild (drop food nearby). 3. Progress to other dogs, people. 4. Always set dog up to succeed. 5. Practice in 10+ locations."},
+{t:"Come (Recall)",n:"Puppy Recall Game",b:"Young dogs, social breeds (Goldens, Labs, Cavaliers)",s:"1. Crouch down, open arms, enthusiastic voice. 2. Say 'Come!' once. 3. Celebrate hugely on arrival. 4. Never call dog for anything unpleasant. 5. Make coming to you the BEST thing."},
+{t:"Come (Recall)",n:"Long Line Method",b:"Independent or distracted breeds (Beagle, Husky, Hounds)",s:"1. Attach 10m long line. 2. Let dog explore. 3. Call 'Come!' cheerfully. 4. Gently guide with line if needed. 5. Huge reward on arrival. 6. Never punish a dog that comes slowly."},
+{t:"Come (Recall)",n:"Two-Person Recall",b:"All breeds, especially puppies",s:"1. Two people stand apart. 2. Person A holds dog. 3. Person B calls enthusiastically. 4. Release dog to run. 5. Celebrate arrival. 6. Alternate callers."},
+{t:"Come (Recall)",n:"Hide and Seek Recall",b:"Intelligent, curious breeds (Border Collie, Aussie, Poodle)",s:"1. Let dog sniff while you hide. 2. Call 'Come!' once. 3. Dog must find you. 4. Huge celebration when found. 5. Teaches dog to check in and use nose."},
+{t:"Come (Recall)",n:"Whistle Training",b:"Working or hunting breeds (Pointers, Setters, Spaniels)",s:"1. Pair whistle blast with treat for 3 days. 2. Whistle = instant treat. 3. Move further away, whistle, reward the run. 4. Use consistent signal (e.g. 3 short blasts). 5. Carries further than voice in the field."},
+{t:"Down",n:"Lure to Floor",b:"Most breeds, especially treat-motivated",s:"1. Dog in Sit. 2. Hold treat at nose, move straight down to floor. 3. Slide treat away along floor. 4. Dog follows into down. 5. Say 'Down' as elbows touch floor. 6. Reward. Never push dog down."},
+{t:"Down",n:"Table Edge Method",b:"Stubborn or independent breeds (Basset, Chow, Shar-Pei)",s:"1. Have dog stand on slightly elevated surface. 2. Lure head down toward edge. 3. Dog naturally lowers to see/reach treat below. 4. Mark and reward. 5. Transition to flat floor after 5+ successes."},
+{t:"Down",n:"Shaping Down",b:"Intelligent breeds (Border Collie, Poodle, GSD)",s:"1. Reward any lowering of body. 2. Gradually require more — first front legs bend, then full down. 3. Use clicker for precision. 4. Add cue only when behavior is consistent."},
+{t:"Down",n:"Tunnel Method",b:"Dogs resistant to lying down",s:"1. Sit on floor with one knee raised. 2. Lure treat under your knee. 3. Dog must go low to reach it — naturally downs. 4. Mark and reward. 5. Remove leg prop over sessions."},
+{t:"Shake Hands / Paw",n:"Hold Treat in Fist",b:"All breeds, especially treat-motivated",s:"1. Ask for Sit. 2. Hold treat in closed fist at paw height. 3. Dog paws at fist. 4. Open hand and reward. 5. Add 'Shake' cue. 6. Transition to open hand."},
+{t:"Shake Hands / Paw",n:"Tickle Paw",b:"Sensitive or aware breeds (Poodle, GSD, Vizsla)",s:"1. Dog in Sit. 2. Lightly tickle back of dog's leg. 3. Dog lifts paw. 4. Catch paw, say 'Shake', reward. 5. Fade the tickle, use verbal cue only."},
+{t:"Shake Hands / Paw",n:"Capture Paw Lift",b:"Independent breeds (Basenji, Chow, Afghan)",s:"1. Watch for dog naturally lifting a paw. 2. Mark and reward the moment paw lifts. 3. Add cue 'Shake'. 4. Gradually require dog to place paw in your hand."},
+{t:"Spin / Twirl",n:"Lure Circle",b:"All breeds",s:"1. Hold treat at nose height. 2. Slowly lure dog in a full circle. 3. Mark and reward. 4. Add cue 'Spin'. 5. Teach opposite direction as 'Twist'."},
+{t:"Spin / Twirl",n:"Shaping Circle",b:"Intelligent breeds (Border Collie, Poodle)",s:"1. Click any turning motion. 2. Gradually require more arc. 3. Build to half circle, then full circle. 4. Add cue. 5. Shape both directions separately."},
+{t:"Spin / Twirl",n:"Target Stick Method",b:"Sight hounds, energetic dogs",s:"1. Teach dog to follow target stick. 2. Move stick in a circle. 3. Dog follows nose/target. 4. Mark and reward full circle. 5. Fade stick over sessions."},
+{t:"Rollover",n:"Lure from Down",b:"Most breeds, treat-motivated",s:"1. Start in Down. 2. Hold treat at dog's shoulder. 3. Slowly move treat over dog's back. 4. Dog follows and rolls. 5. Mark at completion. 6. Add 'Roll over' cue."},
+{t:"Rollover",n:"Stage-by-Stage Shaping",b:"Sensitive or hesitant dogs",s:"1. Reward lying on side first. 2. Then reward rocking to back. 3. Then reward rolling to other side. 4. Build each stage over multiple sessions. 5. Only combine stages when each is solid."},
+{t:"Play Dead / Bang",n:"Hand Signal Lure",b:"Visual breeds (Collie, Shetland Sheepdog)",s:"1. Dog in Down. 2. Use finger-gun gesture + say 'Bang!'. 3. Lure head to floor, body rolls to side. 4. Mark full stillness on side. 5. Add release word 'Alive!'. 6. Reduce lure gradually."},
+{t:"Play Dead / Bang",n:"Side-Down Lure",b:"All breeds with Down foundation",s:"1. Dog in Down. 2. Hold treat at side of nose just past shoulder. 3. Dog turns head, hip follows. 4. Dog rolls to side. 5. Hold 3-5 seconds. 6. Mark and reward. Add cue."},
+{t:"Fetch",n:"Chase and Exchange",b:"High-energy breeds (Labs, Goldens, Retrievers)",s:"1. Use two identical toys. 2. Throw toy #1. 3. When dog has it, show toy #2 enthusiastically. 4. Dog drops #1 to get #2. 5. Throw #2. 6. Gradually add 'Drop it' cue."},
+{t:"Fetch",n:"Tug to Fetch",b:"Toy-motivated dogs, terriers, shepherds",s:"1. Start with tug game. 2. Throw toy a short distance. 3. Enthusiastically invite dog back. 4. Restart tug when dog returns. 5. Gradually increase throw distance."},
+{t:"Fetch",n:"Shaping Retrieve",b:"Non-natural retrievers (hounds, terriers, toy breeds)",s:"1. Reward any nose touch to object. 2. Then reward mouth contact. 3. Then picking up. 4. Then carrying toward you. 5. Each step rewarded many times before moving on."},
+{t:"Leave It",n:"Closed Fist Method",b:"All breeds — start here",s:"1. Put treat in closed fist. 2. Offer fist to dog. 3. Moment dog backs away or looks at you: mark + reward from OTHER hand. 4. Gradually upgrade difficulty."},
+{t:"Leave It",n:"Two-Bowl Method",b:"Food-motivated breeds (Labs, Beagles)",s:"1. Place boring treat in one bowl, yummy treat in other. 2. Cover boring treat loosely. 3. Dog learns ignoring one gets better reward. 4. Graduate to uncovered. 5. Add 'Leave it' cue."},
+{t:"Leave It",n:"Real-World Proofing",b:"All breeds once basic leave it is solid",s:"1. Practice with food on floor. 2. Add dropped items. 3. Practice near other dogs. 4. Practice near wildlife and distractions. 5. Always use high-value reward for compliance."},
+{t:"Heel / Loose Leash Walking",n:"Engage-Disengage",b:"Reactive breeds, easily distracted dogs",s:"1. Mark and reward any attention to you. 2. Walk 3-5 steps, stop. 3. Reward dog for checking in. 4. Gradually extend walking segments. 5. Build value for being at your side."},
+{t:"Heel / Loose Leash Walking",n:"Red Light Green Light",b:"Pullers of all breeds",s:"1. Walk forward. 2. Moment leash tightens: stop completely. 3. Wait for slack. 4. Walk forward again. 5. Consistency is everything — every tight-leash moment must result in a stop."},
+{t:"Heel / Loose Leash Walking",n:"Reward Position",b:"Food-motivated breeds (GSD, Malinois, Poodle)",s:"1. Mark and treat dog in heel position frequently. 2. Use high rate of reinforcement initially. 3. Dog learns heel = treat dispenser. 4. Gradually reduce frequency. 5. Add formal 'Heel' cue."},
+{t:"Focus / Watch Me",n:"Eye Contact Shaping",b:"All breeds",s:"1. Hold treat at eye level. 2. Wait for dog to look at YOUR eyes, not the treat. 3. Mark the eye contact. 4. Reward. 5. Add 'Watch me' cue. 6. Build duration."},
+{t:"Focus / Watch Me",n:"Name Game",b:"Puppies and newly adopted dogs",s:"1. Say dog's name once. 2. Mark and reward any head turn toward you. 3. Gradually require full eye contact. 4. Practice with distractions. 5. Name should always predict something good."},
+{t:"Place / Go to Mat",n:"Lure to Mat",b:"Most breeds",s:"1. Place mat on floor. 2. Lure dog onto mat with treat. 3. Ask for Down on mat. 4. Mark and reward heavily. 5. Add 'Place' cue. 6. Gradually increase distance to send."},
+{t:"Place / Go to Mat",n:"Shaping Mat Behavior",b:"Intelligent breeds (Border Collie, Poodle, GSD)",s:"1. Place mat down. 2. Click any interaction with mat. 3. Build to paw on mat, then 4 paws. 4. Shape into a Down. 5. Add cue only when behavior is fluent."},
+{t:"Jump Through Hoop",n:"Low Hoop Entry",b:"All breeds — always start low",s:"1. Hold hoop on ground. 2. Lure dog through with treat. 3. Add 'Through' or 'Jump' cue. 4. Gradually raise height. 5. Never exceed comfortable height. Age and joint appropriate only."},
+{t:"Jump Through Hoop",n:"Hand Target Through",b:"Energetic, agility-keen breeds",s:"1. Teach hand target first. 2. Place hand through hoop. 3. Dog follows hand through hoop. 4. Mark and reward. 5. Fade hand target over sessions."},
+{t:"Weave Between Legs",n:"Figure-8 Lure",b:"Small to medium breeds, food-motivated",s:"1. Stand with legs apart. 2. Lure dog through legs in figure-8. 3. Mark each complete weave. 4. Add 'Weave' cue. 5. Gradually reduce lure."},
+{t:"Weave Between Legs",n:"One Leg at a Time",b:"Larger breeds, beginners",s:"1. Stand with one leg forward. 2. Lure dog around that leg. 3. Master one direction. 4. Add second leg. 5. Build full figure-8 pattern."},
+{t:"Speak / Bark on Cue",n:"Capture Barking",b:"Vocal breeds (Huskies, Beagles, Terriers)",s:"1. Wait for dog to bark naturally. 2. Mark immediately + reward. 3. Say 'Speak' just before dog is about to bark. 4. Build association. 5. Always pair with 'Quiet' training."},
+{t:"Speak / Bark on Cue",n:"Trigger and Mark",b:"All breeds",s:"1. Find what triggers barking (doorbell, knocking). 2. Trigger the bark. 3. Mark and reward. 4. Add 'Speak' cue before trigger. 5. Fade trigger. 6. Dog barks on cue alone."},
+{t:"Quiet / Stop Barking",n:"Quiet Cue Method",b:"All breeds with existing Speak command",s:"1. Ask dog to Speak. 2. When dog pauses between barks: mark + reward. 3. Add 'Quiet' cue before the pause. 4. Extend quiet duration before reward."},
+{t:"Quiet / Stop Barking",n:"Management and Redirect",b:"Anxious or reactive barkers",s:"1. Identify barking triggers. 2. Set up controlled exposure. 3. Mark any break in barking. 4. Reward calmness generously. 5. Increase exposure gradually. 6. Never punish the bark — redirect."},
+{t:"Back Up",n:"Body Pressure Method",b:"All breeds",s:"1. Stand in front of dog. 2. Slowly walk toward dog. 3. Dog naturally backs up. 4. Mark a few steps backward. 5. Reward. 6. Add 'Back' cue as dog starts moving."},
+{t:"Back Up",n:"Target Stick Backup",b:"Intelligent breeds, treat-motivated",s:"1. Teach target stick touch. 2. Hold stick at dog's chest. 3. Move stick toward dog — dog backs away. 4. Mark and reward. 5. Fade stick, add 'Back' cue."},
+{t:"High Five",n:"Build from Shake",b:"Dogs with existing Shake / Paw",s:"1. Ask for Shake. 2. Raise your hand slightly higher. 3. Dog lifts paw to meet it. 4. Mark and reward. 5. Add 'High five' cue. 6. Differentiate from Shake."},
+{t:"High Five",n:"Raised Fist Lure",b:"Beginners without Shake foundation",s:"1. Hold treat in fist at shoulder height. 2. Dog paws at fist. 3. Open fist when paw makes contact. 4. Reward. 5. Transition to flat open palm. 6. Add 'High five' cue."},
+{t:"Wave",n:"Extend High Five",b:"Dogs with High Five foundation",s:"1. Ask for High Five. 2. Present hand just out of reach. 3. Dog raises paw, waves trying to reach. 4. Mark the wave motion. 5. Add 'Wave' cue. 6. Fade hand presentation."},
+{t:"Wave",n:"Delayed Paw Release",b:"Intelligent breeds",s:"1. Dog in Sit. 2. Present hand for Shake. 3. Delay taking paw — dog waves repeatedly. 4. Mark the waving. 5. Add 'Wave' cue before the motion. 6. Build fluency."},
+{t:"Bow / Take a Bow",n:"Elbow Lure",b:"All breeds",s:"1. Dog standing. 2. Hold treat at nose. 3. Move treat slowly down between front legs. 4. Dog lowers front end. 5. Mark when elbows touch ground. 6. Keep back end up. 7. Add 'Bow' cue."},
+{t:"Bow / Take a Bow",n:"Capture the Stretch",b:"Dogs that stretch after waking up",s:"1. Watch for dog's natural morning stretch. 2. Mark that bow position. 3. Reward. 4. Add 'Bow' cue. 5. Dog learns to offer the stretch on cue."},
+{t:"Name Recognition",n:"Name + Treat Game",b:"Puppies and newly adopted dogs",s:"1. Say dog's name once in a happy tone. 2. The instant dog looks at you: mark + jackpot reward. 3. Practice in different rooms, then outdoors. 4. Build to looking reliably when called."},
+{t:"Name Recognition",n:"Name While Distracted",b:"All dogs — builds reliability",s:"1. Start with low distraction. 2. Say name once. 3. Mark and reward the look. 4. Gradually introduce more distractions. 5. Name should always be followed by something good."},
+{t:"Go Potty on Cue",n:"Cue + Reward Timing",b:"All breeds, especially puppies",s:"1. Take dog to potty spot. 2. Wait quietly. 3. The moment squatting begins: say 'Go potty!' calmly. 4. Mark when finished + jackpot treat. 5. Only say cue when dog is actually going — pair consistently."},
+{t:"Go Potty on Cue",n:"Same Spot Method",b:"Apartment dogs, dogs that travel",s:"1. Always go to same potty area. 2. Use same verbal cue each time. 3. Reward only in that area. 4. Dog learns area = go time. 5. Generalize to new spots by starting the routine there."},
+{t:"Find It / Nose Work",n:"Basic Find It",b:"All breeds — especially scent hounds",s:"1. Show dog a treat. 2. Toss nearby and say 'Find it!'. 3. Let dog use nose to locate it. 4. Increase hiding difficulty over days. 5. Great for yard or park mental enrichment."},
+{t:"Find It / Nose Work",n:"Box Search",b:"Beginners in nose work",s:"1. Place treat in one of several boxes. 2. Release dog to investigate. 3. Mark when dog identifies correct box. 4. Progress to odor targets instead of treats."},
+{t:"Find It / Nose Work",n:"Muffin Tin Game",b:"All breeds, mental enrichment",s:"1. Place treats under tennis balls in a muffin tin. 2. Release dog to nose out the treats. 3. Increase challenge by using fewer treats. 4. Great rainy-day exercise."},
+{t:"Balance Treat on Nose",n:"Impulse Control Build",b:"Food-motivated breeds",s:"1. Dog in Sit. 2. Ask for Stay. 3. Place treat gently on muzzle. 4. Hold 1-2 seconds. 5. Mark, let dog flip treat and eat. 6. Gradually extend duration. 7. Release with 'OK!'."},
+{t:"Army Crawl",n:"Floor Lure",b:"All breeds with solid Down",s:"1. Dog in Down. 2. Hold treat just above floor at nose height. 3. Slowly move treat away from dog. 4. Dog crawls forward. 5. Mark after 2-3 crawl steps. 6. Gradually increase distance."},
+{t:"Army Crawl",n:"Leg Tunnel Crawl",b:"Medium and small breeds",s:"1. Kneel on all fours. 2. Lure dog under your body. 3. Dog must stay low to fit through. 4. Mark and reward on exit. 5. Transition to flat-surface crawl."},
+{t:"Carry Items",n:"Hold and Carry",b:"Retriever breeds, fetch-trained dogs",s:"1. Teach 'Hold' with a dumbbell. 2. Ask dog to take item. 3. Mark holding for 2-3 seconds. 4. Lure dog forward while holding. 5. Add 'Carry' cue. 6. Build to longer distances."},
+{t:"Skateboard / Ride Object",n:"Paw Targeting",b:"Confident, energetic breeds",s:"1. Teach dog to touch skateboard with paw. 2. Reward all contact. 3. Shape to placing two paws, then four. 4. Secure board initially so it doesn't move. 5. Gradually allow movement. 6. Many weeks of small steps."},
+{t:"Open/Close Door",n:"Target and Tug",b:"Service dog breeds (Labs, GSD, Golden)",s:"1. Attach rope to door handle. 2. Teach dog to target rope with nose. 3. Build to gripping rope. 4. Shape pulling motion. 5. Mark and reward door movement. 6. Teach close by nudging door with nose."},
+{t:"Tidy Up Toys",n:"Fetch to Box",b:"Retriever breeds, dogs with Fetch and Drop It",s:"1. Place toy box in room. 2. Toss toy near box. 3. When dog is near box: ask 'Drop it'. 4. Mark toy landing in box with jackpot. 5. Gradually require dog to carry toy further."},
+{t:"Identify Named Objects",n:"Two Object Choice",b:"High-intelligence breeds (Border Collie, Poodle)",s:"1. Present two objects. 2. Say name of one. 3. Mark and reward if dog touches correct one. 4. Swap positions to prevent location bias. 5. Add new objects one at a time only when previous set is reliable."},
+{t:"Limp / Fake Injury",n:"Single Paw Lift Walk",b:"Dogs with solid Shake and Heel",s:"1. Dog in Heel. 2. Ask dog to raise one paw (from Shake). 3. Walk one step while paw is raised. 4. Mark the limping step. 5. Reward. 6. Gradually chain more steps. Very slow process."}
+];
+
+// Init breeds datalist
+const dl=document.getElementById('bList');
+BREEDS.forEach(b=>{const o=document.createElement('option');o.value=b;dl.appendChild(o);});
+
+// Chips
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('on')));
+
+function chips(id){return Array.from(document.querySelectorAll('#'+id+' .chip.on')).map(c=>c.dataset.v);}
+function show(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');}
+
+let prof={}, cards=[], idx=0, ratings=[], sid='', stepsOpen=false;
+
+function startSession(){
+  const nm=document.getElementById('dName').value.trim()||'Dog';
+  const br=document.getElementById('dBreed').value.trim()||'Unknown';
+  const ay=parseInt(document.getElementById('aY').value)||0;
+  const am=parseInt(document.getElementById('aM').value)||0;
+  prof={name:nm,breed:br,ageMo:ay*12+am,exp:parseInt(document.getElementById('exp').value),motiv:chips('motiv'),diffs:chips('diffs')};
+  sid=Date.now().toString(36);
+  ratings=[];
+  const tmap={};
+  TRICKS.forEach(t=>tmap[t.name]=t);
+  const sel=prof.diffs;
+  cards=METHODS.filter(m=>{const t=tmap[m.t];return t&&(sel.length===0||sel.includes(t.diff));}).map(m=>({...m,trick:tmap[m.t]}));
+  for(let i=cards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]];}
+  idx=0;show(2);renderCard();
+}
+
+function renderCard(){
+  if(idx>=cards.length){goResults();return;}
+  const c=cards[idx];const t=c.trick;
+  const pct=Math.round((idx/cards.length)*100);
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pTxt').textContent=(idx+1)+' / '+cards.length;
+  document.getElementById('cCat').textContent=t.cat;
+  document.getElementById('cDiff').textContent=t.diff;
+  document.getElementById('cTrick').textContent=t.name;
+  document.getElementById('cMethod').textContent=c.n;
+  document.getElementById('cBest').textContent=c.b;
+  document.getElementById('cPre').innerHTML='<b>'+(t.pre||'No prerequisites')+'</b>';
+  document.getElementById('cTime').innerHTML='<b>'+t.time+'</b> avg.';
+  document.getElementById('cReward').innerHTML='<b>'+t.reward+'</b>';
+  document.getElementById('sBox').textContent=c.s;
+  document.getElementById('sBox').style.display='none';
+  document.getElementById('sBtn').textContent='Show step-by-step instructions';
+  document.getElementById('dLabel').textContent=prof.name+' · '+prof.breed;
+  stepsOpen=false;
+}
+
+function toggleSteps(){
+  stepsOpen=!stepsOpen;
+  document.getElementById('sBox').style.display=stepsOpen?'block':'none';
+  document.getElementById('sBtn').textContent=stepsOpen?'Hide instructions':'Show step-by-step instructions';
+}
+
+function rate(r){
+  if(idx>=cards.length)return;
+  const c=cards[idx];const t=c.trick;
+  const bt=BT[prof.breed]||{};
+  ratings.push({session_id:sid,timestamp:new Date().toISOString(),dog_name:prof.name,breed:prof.breed,age_months:prof.ageMo,owner_experience:prof.exp,food_motivated:prof.motiv.includes('food')?1:0,play_motivated:prof.motiv.includes('play')?1:0,praise_motivated:prof.motiv.includes('praise')?1:0,clicker_used:prof.motiv.includes('clicker')?1:0,trick_name:t.name,trick_category:t.cat,trick_difficulty:t.diff,method_name:c.n,best_for:c.b,rating:r,breed_trainability:bt.tr||'',breed_intelligence:bt.iq||'',breed_energy:bt.en||'',breed_stubbornness:bt.st||'',breed_sensitivity:bt.se||'',breed_size:bt.sz||''});
+  idx++;renderCard();
+}
+
+function goResults(){
+  saveData();showResults();show(3);
+}
+
+async function saveData(){
+  try{
+    let prev=[];
+    try{const e=await window.storage.get('dgt:ratings');if(e)prev=JSON.parse(e.value);}catch(e){}
+    await window.storage.set('dgt:ratings',JSON.stringify([...prev,...ratings]));
+  }catch(e){}
+}
+
+function showResults(){
+  const u=ratings.filter(r=>r.rating==='useful').length;
+  const nu=ratings.filter(r=>r.rating==='not_useful').length;
+  const sk=ratings.filter(r=>r.rating==='skip').length;
+  document.getElementById('sSummary').textContent=prof.name+' ('+prof.breed+') · '+ratings.length+' methods evaluated';
+  document.getElementById('sStats').innerHTML=`<div class="stat"><div class="stat-n">${u}</div><div class="stat-l">Helpful</div></div><div class="stat"><div class="stat-n">${nu}</div><div class="stat-l">Not helpful</div></div><div class="stat"><div class="stat-n">${sk}</div><div class="stat-l">Skipped</div></div>`;
+  const h=ratings.filter(r=>r.rating==='useful');
+  const hDiv=document.getElementById('sHelp');
+  hDiv.innerHTML=h.length===0?'<p style="font-size:14px;color:var(--color-text-secondary);">No methods marked as helpful yet.</p>':h.slice(0,10).map(r=>`<div class="helpful-row"><span class="trick-bit">${r.trick_name}</span> <span class="method-bit">— ${r.method_name}</span></div>`).join('');
+}
+
+async function exportCSV(){
+  let all=ratings;
+  try{const e=await window.storage.get('dgt:ratings');if(e)all=JSON.parse(e.value);}catch(e){}
+  if(all.length===0){alert('No ratings to export yet.');return;}
+  const h=Object.keys(all[0]);
+  const rows=[h.join(','),...all.map(r=>h.map(k=>{const v=String(r[k]??'').replace(/"/g,'""');return v.includes(',')||v.includes('"')?`"${v}"`:v;}).join(','))];
+  const b=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8;'});
+  const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='dog_training_ml_dataset_'+Date.now()+'.csv';a.click();URL.revokeObjectURL(u);
+}
+
+async function toggleAll(){
+  const a=document.getElementById('allArea');
+  if(a.style.display!=='none'){a.style.display='none';return;}
+  try{
+    let all=ratings;
+    try{const e=await window.storage.get('dgt:ratings');if(e)all=JSON.parse(e.value);}catch(e){}
+    a.style.display='block';
+    a.innerHTML=`<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;"><p style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:0.75rem;">${all.length} total rows stored across all sessions</p>${all.slice(-8).reverse().map(r=>`<div style="padding:6px 0;border-top:0.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-secondary);">${r.breed||'Unknown'} · ${r.trick_name} · ${r.method_name} → <span style="font-weight:500;color:var(--color-text-primary);">${r.rating}</span></div>`).join('')}</div>`;
+  }catch(e){document.getElementById('allArea').style.display='block';document.getElementById('allArea').innerHTML='<p style="font-size:13px;color:var(--color-text-secondary);">Could not load stored data.</p>';}
+}
+
+function newSess(){ratings=[];idx=0;show(1);}
+</script>
