@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>UpTail — AI Trening za Pse</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bark: #1E1209;
+  --cream: #FDF6EC;
+  --rust: #C4622D;
+  --gold: #D4A853;
+  --moss: #4A6741;
+  --sage: #A8C5A0;
+  --sand: #E8C99A;
+  --mist: #F5EFE6;
+  --warm: #8B4513;
+  --card: #FFFFFF;
+  --text-muted: #888;
+  --border: #EDE5D8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--bark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─ SCREENS ─ */
+.screen { display: none; min-height: 100vh; animation: fadeUp .35s ease; }
+.screen.active { display: flex; flex-direction: column; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+
+/* ─ WELCOME ─ */
+#welcome {
+  background: var(--bark);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 28px;
+  text-align: center;
+}
+.blob { position:absolute; border-radius:50%; pointer-events:none; }
+.blob-1 { top:-80px; right:-80px; width:280px; height:280px; background:var(--rust); opacity:.22; }
+.blob-2 { bottom:80px; left:-70px; width:200px; height:200px; background:var(--gold); opacity:.15; }
+.blob-3 { bottom:-40px; right:40px; width:140px; height:140px; background:var(--moss); opacity:.12; }
+
+.logo-ring {
+  width:88px; height:88px; border-radius:50%;
+  background:var(--cream); margin:0 auto 20px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 32px rgba(0,0,0,.35);
+}
+.brand-title { font-family:'Fraunces',serif; font-size:56px; font-weight:700; letter-spacing:-2px; line-height:1; }
+.brand-sub { font-size:13px; letter-spacing:3px; text-transform:uppercase; opacity:.6; margin-top:6px; margin-bottom:36px; }
+.feature-card {
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+  border-radius:18px; padding:24px 22px; margin-bottom:36px; text-align:left;
+  backdrop-filter:blur(8px);
+}
+.feature-item { display:flex; align-items:center; gap:12px; margin-bottom:14px; font-size:14px; }
+.feature-item:last-child { margin-bottom:0; }
+.btn-primary {
+  width:100%; padding:18px; background:var(--gold); color:var(--bark);
+  border:none; border-radius:16px; font-size:17px; font-weight:700;
+  cursor:pointer; transition:.15s; font-family:'DM Sans',sans-serif;
+  box-shadow:0 4px 20px rgba(212,168,83,.35);
+}
+.btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(212,168,83,.45); }
+.btn-primary:active { transform:scale(.97); }
+.btn-primary:disabled { background:var(--sand); color:#aaa; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* ─ ONBOARD / QUIZ ─ */
+.onboard-page { padding:52px 26px 40px; flex:1; display:flex; flex-direction:column; }
+.step-bar { display:flex; gap:6px; margin-bottom:32px; }
+.step-seg { flex:1; height:4px; border-radius:2px; background:var(--sand); transition:background .3s; }
+.step-seg.done { background:var(--rust); }
+
+.page-tag { font-size:12px; font-weight:700; color:var(--rust); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
+.page-h1 { font-family:'Fraunces',serif; font-size:34px; font-weight:700; line-height:1.18; margin-bottom:24px; }
+label.field-label { display:block; font-size:11px; font-weight:700; color:var(--warm); letter-spacing:2px; text-transform:uppercase; margin-bottom:9px; }
+input.text-input {
+  width:100%; padding:15px 18px; border-radius:13px;
+  border:2px solid var(--border); background:#fff;
+  font-size:17px; font-weight:500; color:var(--bark); margin-bottom:22px;
+  transition:.2s; font-family:'DM Sans',sans-serif;
+}
+input.text-input:focus { border-color:var(--rust); outline:none; }
+
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:8px; }
+.choice-btn {
+  padding:13px 10px; border-radius:12px;
+  border:2px solid var(--border); background:#fff;
+  color:var(--bark); font-size:13px; font-weight:600;
+  cursor:pointer; transition:.15s; font-family:'DM Sans',sans-serif;
+  text-align:center;
+}
+.choice-btn:hover { border-color:var(--rust); }
+.choice-btn.selected { border-color:var(--rust); background:var(--rust); color:#fff; }
+
+.search-input {
+  width:100%; padding:13px 16px; border-radius:12px;
+  border:2px solid var(--border); background:#fff;
+  font-size:15px; margin-bottom:12px; font-family:'DM Sans',sans-serif;
+}
+.search-input:focus { border-color:var(--rust); outline:none; }
+.breed-list { max-height:300px; overflow-y:auto; display:flex; flex-direction:column; gap:7px; margin-bottom:24px; }
+.breed-item {
+  padding:13px 16px; border-radius:11px;
+  border:2px solid var(--border); background:#fff;
+  cursor:pointer; font-size:14px; font-weight:500; transition:.15s;
+  display:flex; align-items:center; gap:10px;
+}
+.breed-item:hover { border-color:var(--moss); }
+.breed-item.selected { border-color:var(--moss); background:var(--moss); color:#fff; }
+
+/* Quiz */
+.quiz-progress { height:5px; background:var(--sand); border-radius:3px; margin-bottom:32px; }
+.quiz-bar { height:100%; background:linear-gradient(90deg, var(--rust), var(--gold)); border-radius:3px; transition:width .4s ease; }
+.quiz-options { display:flex; flex-direction:column; gap:11px; flex:1; }
+.quiz-option {
+  padding:17px 20px; border-radius:14px;
+  border:2px solid var(--border); background:#fff;
+  cursor:pointer; font-size:15px; font-weight:500;
+  display:flex; align-items:center; gap:12px; transition:.15s;
+  text-align:left; font-family:'DM Sans',sans-serif;
+}
+.quiz-option:hover { border-color:var(--rust); background:#FFF8F4; }
+.option-letter {
+  width:28px; height:28px; border-radius:50%; background:var(--mist);
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; flex-shrink:0; color:var(--warm);
+}
+.back-link { background:none; border:none; color:var(--text-muted); font-size:13px; font-weight:500; cursor:pointer; margin-top:18px; padding:0; font-family:'DM Sans',sans-serif; }
+
+/* ─ LOADING ─ */
+#loading { background:var(--bark); align-items:center; justify-content:center; gap:20px; }
+.loader-ring { width:60px; height:60px; border:3px solid rgba(255,255,255,.1); border-top-color:var(--gold); border-radius:50%; animation:spin .9s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loading-text { color:var(--cream); font-size:16px; opacity:.7; }
+
+/* ─ DASHBOARD ─ */
+#dashboard { flex:1; padding-bottom:80px; }
+.dash-header {
+  background:var(--bark); padding:52px 24px 26px;
+  position:relative; overflow:hidden; color:var(--cream);
+}
+.dash-header::after { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; background:var(--rust); border-radius:50%; opacity:.18; }
+.dash-greeting { font-size:13px; opacity:.65; margin-bottom:4px; }
+.dash-name { font-family:'Fraunces',serif; font-size:32px; font-weight:700; margin-bottom:14px; position:relative; z-index:1; }
+.tag { display:inline-block; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:700; margin-right:7px; }
+.tag-gold { background:var(--gold); color:var(--bark); }
+.tag-sage { background:var(--sage); color:var(--bark); }
+.tag-rust { background:var(--rust); color:#fff; }
+
+.tab-bar { display:flex; background:#fff; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+.tab-btn { flex:1; padding:14px 4px; background:none; border:none; border-bottom:2px solid transparent; font-size:11px; font-weight:600; color:var(--text-muted); cursor:pointer; font-family:'DM Sans',sans-serif; transition:.2s; }
+.tab-btn.active { color:var(--rust); border-bottom-color:var(--rust); }
+
+.tab-content { display:none; padding:22px 18px; }
+.tab-content.active { display:block; }
+
+.section-title { font-family:'Fraunces',serif; font-size:22px; font-weight:700; margin-bottom:16px; }
+
+/* Tricks */
+.trick-card {
+  background:#fff; border-radius:16px; padding:16px 18px;
+  margin-bottom:12px; border:1px solid var(--border);
+  cursor:pointer; transition:.15s;
+}
+.trick-card:hover { box-shadow:0 4px 18px rgba(0,0,0,.07); }
+.trick-header { display:flex; justify-content:space-between; align-items:flex-start; }
+.trick-name { font-size:16px; font-weight:700; margin-bottom:6px; }
+.trick-tags { display:flex; gap:7px; flex-wrap:wrap; }
+.trick-tag { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+.ease-bar-wrap { margin-top:12px; }
+.ease-label { font-size:11px; color:var(--text-muted); margin-bottom:5px; font-weight:600; }
+.ease-bar { height:5px; background:var(--border); border-radius:3px; }
+.ease-fill { height:100%; border-radius:3px; background:linear-gradient(90deg, var(--rust), var(--gold)); transition:width .6s ease; }
+
+.trick-detail { margin-top:14px; padding-top:14px; border-top:1px solid var(--mist); display:none; }
+.trick-detail.open { display:block; }
+.method-box { background:var(--bark); border-radius:14px; padding:18px 16px; margin-top:12px; }
+.method-title { font-size:11px; font-weight:700; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+.method-steps { font-size:13px; color:rgba(253,246,236,.85); line-height:1.7; white-space:pre-wrap; }
+.btn-start { background:var(--rust); color:#fff; border:none; border-radius:10px; padding:10px 18px; font-size:13px; font-weight:600; cursor:pointer; margin-top:12px; font-family:'DM Sans',sans-serif; }
+
+/* Breed info card */
+.breed-card {
+  background:var(--bark); border-radius:20px; padding:22px;
+  color:var(--cream); margin-bottom:24px; position:relative; overflow:hidden;
+}
+.breed-card::after { content:''; position:absolute; bottom:-30px; right:-30px; width:120px; height:120px; background:var(--rust); border-radius:50%; opacity:.18; }
+.breed-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+.breed-stat { background:rgba(255,255,255,.07); border-radius:12px; padding:14px 14px; }
+.stat-label { font-size:10px; font-weight:700; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
+.stat-dots { display:flex; gap:4px; margin-top:4px; }
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot-on { background:var(--gold); }
+.dot-off { background:rgba(255,255,255,.15); }
+.stat-val { font-size:18px; font-weight:700; }
+
+/* Weekly plan */
+.week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-bottom:26px; }
+.week-day { text-align:center; }
+.week-label { font-size:9px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:5px; }
+.week-label.today { color:var(--rust); }
+.week-cell { aspect-ratio:1; border-radius:9px; background:var(--sand); display:flex; align-items:center; justify-content:center; font-size:14px; }
+.week-cell.done { background:var(--moss); color:#fff; font-size:12px; font-weight:700; }
+.week-cell.today-cell { background:var(--rust); }
+
+/* Today card */
+.today-card {
+  background:linear-gradient(135deg, var(--bark), #2d1a0a);
+  border-radius:20px; padding:22px 20px; margin-bottom:22px;
+  position:relative; overflow:hidden;
+}
+.today-card::before { content:''; position:absolute; top:-40px; right:-40px; width:140px; height:140px; background:var(--rust); border-radius:50%; opacity:.2; }
+.today-tag { font-size:10px; font-weight:700; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; }
+.today-title { font-family:'Fraunces',serif; font-size:22px; color:var(--cream); margin-bottom:8px; position:relative; z-index:1; }
+.today-desc { font-size:13px; color:rgba(253,246,236,.7); line-height:1.6; margin-bottom:18px; }
+
+/* AI Chat */
+.chat-wrap { display:flex; flex-direction:column; height:calc(100vh - 300px); min-height:300px; }
+.chat-messages { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px; padding:4px 0; margin-bottom:14px; }
+.msg { max-width:82%; padding:12px 16px; border-radius:18px; font-size:14px; line-height:1.65; }
+.msg-user { background:var(--rust); color:#fff; align-self:flex-end; border-bottom-right-radius:5px; }
+.msg-ai { background:#fff; border:1px solid var(--border); align-self:flex-start; border-bottom-left-radius:5px; }
+.msg-typing { background:#fff; border:1px solid var(--border); align-self:flex-start; border-bottom-left-radius:5px; padding:12px 18px; }
+.typing-dots { display:flex; gap:5px; align-items:center; }
+.typing-dot { width:7px; height:7px; background:var(--text-muted); border-radius:50%; animation:bounce .9s infinite; }
+.typing-dot:nth-child(2){ animation-delay:.15s; }
+.typing-dot:nth-child(3){ animation-delay:.3s; }
+@keyframes bounce { 0%,80%,100%{ transform:scale(.7); opacity:.4; } 40%{ transform:scale(1); opacity:1; } }
+
+.chat-input-wrap { display:flex; gap:8px; background:#fff; border-radius:14px; border:2px solid var(--border); padding:8px 10px; align-items:flex-end; }
+.chat-input-wrap:focus-within { border-color:var(--rust); }
+.chat-textarea { flex:1; border:none; outline:none; font-family:'DM Sans',sans-serif; font-size:14px; resize:none; max-height:100px; min-height:36px; padding:4px 0; color:var(--bark); background:transparent; }
+.chat-send { background:var(--rust); border:none; border-radius:10px; width:38px; height:38px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition:.15s; }
+.chat-send:hover { background:var(--warm); }
+.chat-send:disabled { background:var(--sand); cursor:not-allowed; }
+.chat-quick { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:12px; }
+.quick-chip { background:var(--mist); border:1px solid var(--border); border-radius:20px; padding:6px 14px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:.15s; }
+.quick-chip:hover { background:var(--sand); }
+
+/* Plan */
+.week-plan-card { background:#fff; border-radius:16px; margin-bottom:12px; border:1px solid var(--border); overflow:hidden; }
+.week-plan-header { padding:16px 18px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+.week-plan-body { padding:0 18px 16px; display:none; }
+.week-plan-body.open { display:block; }
+.week-num { font-size:11px; font-weight:700; color:var(--rust); letter-spacing:2px; text-transform:uppercase; }
+.week-focus { font-size:16px; font-weight:700; }
+.breed-note { background:var(--mist); border-left:3px solid var(--gold); border-radius:0 10px 10px 0; padding:12px 14px; font-size:13px; margin-bottom:10px; line-height:1.6; }
+
+/* Bottom nav */
+.bottom-nav { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:600px; background:#fff; border-top:1px solid var(--border); padding:10px 0 16px; text-align:center; font-size:12px; color:var(--text-muted); font-weight:500; z-index:200; }
+
+/* Responsive: wider screens */
+@media (min-width:600px) {
+  .onboard-page { max-width:520px; margin:0 auto; }
+  #welcome { max-width:520px; margin:0 auto; }
+  #dashboard { max-width:600px; margin:0 auto; }
+  .tab-content { padding:24px 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ WELCOME ═══ -->
+<div id="welcome" class="screen active">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div style="position:relative;z-index:1;width:100%;max-width:400px;margin:0 auto;">
+    <div class="logo-ring">
+      <svg viewBox="0 0 100 80" width="56" height="45">
+        <ellipse cx="30" cy="28" rx="22" ry="18" fill="none" stroke="#1E1209" stroke-width="5"/>
+        <ellipse cx="70" cy="28" rx="22" ry="18" fill="none" stroke="#1E1209" stroke-width="5"/>
+        <path d="M30,44 Q50,68 70,44" fill="#1E1209"/>
+        <ellipse cx="38" cy="36" rx="7" ry="8" fill="#1E1209"/>
+        <ellipse cx="62" cy="36" rx="7" ry="8" fill="#1E1209"/>
+        <line x1="50" y1="10" x2="50" y2="28" stroke="#1E1209" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="brand-title">UpTail</div>
+    <div class="brand-sub">AI Trening za Vašega Psa</div>
+    <div class="feature-card">
+      <div class="feature-item"><span style="font-size:20px">🧠</span><span>AI personaliziran plan glede na pasmo in osebnost</span></div>
+      <div class="feature-item"><span style="font-size:20px">🐾</span><span>Trikci razvrščeni po uspešnosti za vašega psa</span></div>
+      <div class="feature-item"><span style="font-size:20px">📈</span><span>4-tedenski progresivni urnik z AI trenerjem</span></div>
+    </div>
+    <button class="btn-primary" onclick="goTo('onboard1')">Začni brezplačno →</button>
+    <p style="text-align:center;font-size:12px;opacity:.35;margin-top:14px;color:var(--cream)">Brez kreditne kartice · 2 minuti</p>
+  </div>
+</div>
+
+<!-- ═══ ONBOARD 1 — Name + Age ═══ -->
+<div id="onboard1" class="screen">
+  <div class="onboard-page">
+    <div class="step-bar" id="stepbar1">
+      <div class="step-seg done"></div><div class="step-seg"></div><div class="step-seg"></div>
+    </div>
+    <div class="page-tag">Korak 1 / 3</div>
+    <h1 class="page-h1">Povejte nam o vašem psu</h1>
+
+    <label class="field-label">Ime psa</label>
+    <input type="text" id="dogName" class="text-input" placeholder="npr. Max, Bella, Roki...">
+
+    <label class="field-label">Starost</label>
+    <div class="grid-2" id="ageGrid">
+      <button class="choice-btn" data-val="3" onclick="selectChoice(this,'ageGrid')">Pod 6 mes.</button>
+      <button class="choice-btn" data-val="9" onclick="selectChoice(this,'ageGrid')">6–12 mesecev</button>
+      <button class="choice-btn" data-val="24" onclick="selectChoice(this,'ageGrid')">1–3 leta</button>
+      <button class="choice-btn" data-val="60" onclick="selectChoice(this,'ageGrid')">3–7 let</button>
+      <button class="choice-btn" data-val="120" onclick="selectChoice(this,'ageGrid')">7+ let</button>
+    </div>
+
+    <div style="flex:1"></div>
+    <button class="btn-primary" id="btn1" onclick="goTo('onboard2')" disabled>Naprej →</button>
+  </div>
+</div>
+
+<!-- ═══ ONBOARD 2 — Breed ═══ -->
+<div id="onboard2" class="screen">
+  <div class="onboard-page">
+    <div class="step-bar">
+      <div class="step-seg done"></div><div class="step-seg done"></div><div class="step-seg"></div>
+    </div>
+    <div class="page-tag">Korak 2 / 3</div>
+    <h1 class="page-h1">Katera je pasma?</h1>
+
+    <input type="text" id="breedSearch" class="search-input" placeholder="🔍  Iščite pasmo..." oninput="searchBreeds(this.value)">
+    <div class="breed-list" id="breedList"></div>
+
+    <button class="btn-primary" id="btn2" onclick="goTo('quiz')" disabled>Naprej →</button>
+  </div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div id="quiz" class="screen">
+  <div class="onboard-page" id="quizContent">
+    <div class="page-tag" id="quizTag">Vprašanje 1 / 7</div>
+    <div class="quiz-progress"><div class="quiz-bar" id="quizBar" style="width:14%"></div></div>
+    <h1 class="page-h1" id="quizQ"></h1>
+    <div class="quiz-options" id="quizOptions"></div>
+    <button class="back-link" onclick="quizBack()">← Nazaj</button>
+  </div>
+</div>
+
+<!-- ═══ LOADING ═══ -->
+<div id="loading" class="screen">
+  <div class="loader-ring"></div>
+  <div class="loading-text" id="loadingText">Analiziramo profil psa...</div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="dashboard" class="screen">
+  <div class="dash-header">
+    <div class="dash-greeting">Dobrodošli 👋</div>
+    <div class="dash-name" id="dashName">Max</div>
+    <div>
+      <span class="tag tag-gold" id="dashBreed">—</span>
+      <span class="tag tag-sage" id="dashAge">—</span>
+      <span class="tag tag-rust">Teden 1</span>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('tricks')">🎯 Trikci</button>
+    <button class="tab-btn" onclick="switchTab('plan')">📅 Plan</button>
+    <button class="tab-btn" onclick="switchTab('ai')">🤖 AI Trener</button>
+  </div>
+
+  <!-- TRICKS TAB -->
+  <div id="tab-tricks" class="tab-content active">
+    <div class="breed-card" id="breedCard">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Profil pasme</div>
+      <div id="breedCardName" style="font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin-bottom:4px"></div>
+      <div id="breedCardGroup" style="font-size:13px;opacity:.6;margin-bottom:14px"></div>
+      <div class="breed-stat-grid" id="breedStats"></div>
+    </div>
+
+    <div class="section-title">Priporočeni trikci za vašega psa</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.6">Razvrščeno po verjetnosti uspešnosti glede na pasmo, starost in osebnost.</p>
+    <div id="tricksList"></div>
+  </div>
+
+  <!-- PLAN TAB -->
+  <div id="tab-plan" class="tab-content">
+    <div class="today-card">
+      <div class="today-tag">🤖 AI Priporoča danes</div>
+      <div class="today-title" id="todayTitle">Trening poslušnosti</div>
+      <div class="today-desc" id="todayDesc">Na podlagi vašega profila AI predlaga fokus na temeljne ukaze.</div>
+      <button class="btn-primary" style="max-width:180px" onclick="switchTab('ai')">▶ Začni sejo</button>
+    </div>
+
+    <div class="week-grid" id="weekGrid"></div>
+
+    <div class="section-title">4-tedenski plan</div>
+    <div id="breedNotes"></div>
+    <div id="weekPlan"></div>
+  </div>
+
+  <!-- AI CHAT TAB -->
+  <div id="tab-ai" class="tab-content">
+    <div class="section-title">AI Trener</div>
+    <div class="chat-quick" id="quickChips"></div>
+    <div class="chat-wrap">
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg msg-ai">Pozdravljeni! 🐾 Sem vaš UpTail AI trener. Kako vam danes lahko pomagam pri treningu?</div>
+      </div>
+      <div class="chat-input-wrap">
+        <textarea class="chat-textarea" id="chatInput" rows="1" placeholder="Vprašajte karkoli o treningu..."
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
+          oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+        <button class="chat-send" id="chatSendBtn" onclick="sendChat()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">🐾 UpTail · AI trening za vašega psa</div>
+</div>
+
+<script>
+// ─── STATE ───
+const state = {
+  dogName: '', breed: '', ageMonths: 24, ageLabel: '',
+  foodMotivated: false, playMotivated: false, praiseMotivated: false,
+  clickerUsed: false, ownerExperience: 1,
+  strangers: '', energy: '', obedience: '', motivation: '', alone: '',
+  quizStep: 0,
+  trickData: [], planData: null,
+  chatHistory: [],
+};
+
+const QUIZ = [
+  { q: 'Kako se %name% odziva na tujce?', key:'strangers',
+    opts:['Zelo prijazno','Sprva zadržan, potem prijazen','Plašen','Brani / agresiven'] },
+  { q: 'Koliko je %name% energičen tekom dneva?', key:'energy',
+    opts:['Hiperaktiven','Zmerno aktiven','Sproščen','Pravi lenuh'] },
+  { q: 'Kako %name% reagira na ukaze?', key:'obedience',
+    opts:['Takoj uboga','Uboga z motivacijo','Včasih ignorira','Pogosto ignorira'] },
+  { q: 'Kateri motivator deluje najboljše?', key:'motivation',
+    opts:['Hrana / priboljški','Igra in igrače','Pohvala in božanje','Kombinacija vsega'] },
+  { q: 'Kako se %name% obnaša, ko ste sami?', key:'alone',
+    opts:['Popolnoma sproščen','Malo nemir','Separacijska anksioznost','Destruktiven'] },
+  { q: 'Kakšne so vaše izkušnje s treningom psov?', key:'owner_exp',
+    opts:['Popoln začetnik','Nekaj izkušenj','Izkušen trener'] },
+  { q: 'Kaj vas zanima pri treningu?', key:'clicker',
+    opts:['Osnove in ukaze','Zabavne trike','Agility / šport','Vse skupaj'] },
+];
+
+// ─── SCREEN NAV ───
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if (id === 'onboard2') loadBreeds('');
+  if (id === 'quiz') renderQuiz();
+}
+
+// ─── ONBOARD 1 ───
+function selectChoice(btn, gridId) {
+  document.querySelectorAll(`#${gridId} .choice-btn`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  if (gridId === 'ageGrid') {
+    state.ageMonths = parseInt(btn.dataset.val);
+    state.ageLabel = btn.textContent;
+  }
+  checkBtn1();
+}
+function checkBtn1() {
+  const ok = document.getElementById('dogName').value.trim() && state.ageMonths;
+  document.getElementById('btn1').disabled = !ok;
+}
+document.getElementById('dogName').addEventListener('input', e => {
+  state.dogName = e.target.value.trim(); checkBtn1();
+});
+
+// ─── ONBOARD 2 ───
+async function loadBreeds(q) {
+  const res = await fetch(`/api/breeds?q=${encodeURIComponent(q)}`);
+  const data = await res.json();
+  renderBreeds(data.breeds);
+}
+function searchBreeds(q) { loadBreeds(q); }
+function renderBreeds(list) {
+  const el = document.getElementById('breedList');
+  el.innerHTML = list.map(b => `
+    <button class="breed-item ${state.breed===b?'selected':''}" onclick="selectBreed('${b.replace(/'/,"\\'")}')">
+      ${state.breed===b ? '✓ ' : ''}${b}
+    </button>`).join('');
+}
+function selectBreed(b) {
+  state.breed = b;
+  renderBreeds(document.getElementById('breedList').querySelectorAll('.breed-item').length ?
+    Array.from(document.getElementById('breedList').querySelectorAll('.breed-item')).map(el => el.textContent.trim().replace('✓ ','')) : [b]);
+  loadBreeds(document.getElementById('breedSearch').value);
+  document.getElementById('btn2').disabled = false;
+}
+
+// ─── QUIZ ───
+function renderQuiz() {
+  const q = QUIZ[state.quizStep];
+  const name = state.dogName || 'vaš pes';
+  const pct = Math.round(((state.quizStep + 1) / QUIZ.length) * 100);
+
+  document.getElementById('quizTag').textContent = `Vprašanje ${state.quizStep+1} / ${QUIZ.length}`;
+  document.getElementById('quizBar').style.width = pct + '%';
+  document.getElementById('quizQ').textContent = q.q.replace('%name%', name);
+
+  const opts = document.getElementById('quizOptions');
+  opts.innerHTML = q.opts.map((o, i) => `
+    <button class="quiz-option" onclick="answerQuiz('${q.key}','${o}',${i})">
+      <span class="option-letter">${String.fromCharCode(65+i)}</span>${o}
+    </button>`).join('');
+}
+function answerQuiz(key, val, idx) {
+  // Map answers to profile fields
+  if (key === 'motivation') {
+    state.foodMotivated  = idx === 0 || idx === 3;
+    state.playMotivated  = idx === 1 || idx === 3;
+    state.praiseMotivated = idx === 2 || idx === 3;
+  } else if (key === 'owner_exp') {
+    state.ownerExperience = idx + 1;
+  } else if (key === 'clicker') {
+    state.clickerUsed = idx === 3;
+  }
+  state[key] = val;
+
+  if (state.quizStep < QUIZ.length - 1) {
+    state.quizStep++;
+    renderQuiz();
+  } else {
+    fetchData();
+  }
+}
+function quizBack() {
+  if (state.quizStep > 0) { state.quizStep--; renderQuiz(); }
+  else goTo('onboard2');
+}
+
+// ─── FETCH DATA ───
+async function fetchData() {
+  goTo('loading');
+  const profile = buildProfile();
+
+  const msgs = ['Analiziramo profil psa...','Iščemo najboljše trike...','Generiramo urnik...','Pripravljamo AI priporočila...'];
+  let mi = 0;
+  const iv = setInterval(() => { document.getElementById('loadingText').textContent = msgs[++mi % msgs.length]; }, 1200);
+
+  try {
+    const [recRes, planRes] = await Promise.all([
+      fetch('/api/recommend', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...profile, top_n:12}) }),
+      fetch('/api/training-plan', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({dog_profile:profile}) }),
+    ]);
+    const recData  = await recRes.json();
+    const planData = await planRes.json();
+    clearInterval(iv);
+    state.trickData = recData;
+    state.planData  = planData;
+    buildDashboard(recData, planData);
+    goTo('dashboard');
+  } catch(e) {
+    clearInterval(iv);
+    document.getElementById('loadingText').textContent = 'Napaka pri nalaganju. Prosim osvežite.';
+  }
+}
+
+function buildProfile() {
+  return {
+    dog_name: state.dogName,
+    breed: state.breed,
+    age_months: state.ageMonths,
+    food_motivated: state.foodMotivated,
+    play_motivated: state.playMotivated,
+    praise_motivated: state.praiseMotivated,
+    clicker_used: state.clickerUsed,
+    owner_experience: state.ownerExperience,
+  };
+}
+
+// ─── DASHBOARD BUILD ───
+function buildDashboard(recData, planData) {
+  // Header
+  document.getElementById('dashName').textContent = state.dogName || 'Vaš pes';
+  document.getElementById('dashBreed').textContent = state.breed || 'Mešanec';
+  document.getElementById('dashAge').textContent = state.ageLabel || 'Odrasel';
+
+  buildBreedCard(planData.breed_info);
+  buildTricks(recData.tricks);
+  buildPlan(planData);
+  buildWeekGrid();
+  buildQuickChips();
+  buildTodayCard(recData.tricks);
+}
+
+function buildBreedCard(b) {
+  if (!b) return;
+  document.getElementById('breedCardName').textContent = b['Breed Name'] || state.breed;
+  document.getElementById('breedCardGroup').textContent = (b['Group']||'') + ' · ' + (b['Size']||'');
+
+  const stats = document.getElementById('breedStats');
+  const items = [
+    { label:'Trenabilnost', val: b.trainability_score||3, max:5 },
+    { label:'Inteligenca',  val: b.intelligence_score||3, max:5 },
+    { label:'Trmavost',     val: b['Stubbornness (1-10)']||5, max:10, invert:true },
+    { label:'Energija',     val: b.energy_score||3, max:5 },
+  ];
+  stats.innerHTML = items.map(s => {
+    const pct = s.invert ? Math.round(((s.max - s.val)/s.max)*100) : Math.round((s.val/s.max)*100);
+    const dots = Array.from({length:5},(_,i)=>
+      `<div class="dot ${i < Math.round(s.val/(s.max/5)) ? 'dot-on':'dot-off'}"></div>`).join('');
+    return `<div class="breed-stat">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-val">${s.val} <span style="font-size:12px;opacity:.5">/ ${s.max}</span></div>
+      <div class="stat-dots">${dots}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildTricks(tricks) {
+  const el = document.getElementById('tricksList');
+  el.innerHTML = tricks.map((t, i) => {
+    const pct = Math.round(t.success_probability * 100);
+    const color = pct >= 75 ? '#4A6741' : pct >= 50 ? '#D4A853' : '#C4622D';
+    const catColors = { 'Basic Obedience':'#A8C5A0','Fun Tricks':'#E8C99A','Agility / Sport':'#C4A882','Advanced Tricks':'#D4A853','Enrichment / Sport':'#B5C9A0','Practical Skills':'#C4C4A0' };
+    const catColor = catColors[t.category] || '#E8E8E8';
+
+    return `<div class="trick-card" onclick="toggleTrick(${i})">
+      <div class="trick-header">
+        <div>
+          <div class="trick-name">${t.trick_name}</div>
+          <div class="trick-tags">
+            <span class="trick-tag" style="background:${catColor};color:#1E1209">${t.category}</span>
+            <span class="trick-tag" style="background:${t.difficulty==='Beginner'?'#E8F4E8':t.difficulty==='Intermediate'?'#FFF3DC':'#FFE0D4'};color:${t.difficulty==='Beginner'?'#2D6B2D':t.difficulty==='Intermediate'?'#8B5E00':'#8B2200'}">${t.difficulty}</span>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:20px;font-weight:800;color:${color}">${pct}%</div>
+          <div style="font-size:10px;color:var(--text-muted)">${t.ease_label}</div>
+        </div>
+      </div>
+      <div class="ease-bar-wrap">
+        <div class="ease-bar"><div class="ease-fill" style="width:${pct}%;background:linear-gradient(90deg,${color},${color}aa)"></div></div>
+      </div>
+      <div class="trick-detail" id="trick-${i}">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:var(--mist);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">Čas učenja</div>
+            <div style="font-size:14px;font-weight:700">${t.avg_learning_time||'—'}</div>
+          </div>
+          <div style="background:var(--mist);border-radius:10px;padding:10px 12px">
+            <div style="font-size:10px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px">Seje do uspeha</div>
+            <div style="font-size:14px;font-weight:700">~${t.expected_sessions}</div>
+          </div>
+        </div>
+        ${t.prerequisites ? `<div style="font-size:12px;color:var(--warm);margin-bottom:10px">⚠ Predznanje: <strong>${t.prerequisites}</strong></div>` : ''}
+        ${t.notes ? `<p style="font-size:13px;color:#555;line-height:1.65;margin-bottom:12px">${t.notes}</p>` : ''}
+        ${t.best_method ? `
+        <div class="method-box">
+          <div class="method-title">📋 ${t.best_method}</div>
+          <div class="method-steps">${(t.method_steps||'').replace(/\d+\.\s/g,'\n$&').trim()}</div>
+        </div>` : ''}
+        <button class="btn-start" onclick="askAI(event,'${t.trick_name.replace(/'/,"\\'")}')">🤖 Vprašaj AI trenerja</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleTrick(i) {
+  const el = document.getElementById(`trick-${i}`);
+  el.classList.toggle('open');
+}
+
+function buildPlan(planData) {
+  const notes = document.getElementById('breedNotes');
+  if (planData.breed_notes && planData.breed_notes.length) {
+    notes.innerHTML = planData.breed_notes.map(n =>
+      `<div class="breed-note">💡 ${n}</div>`).join('');
+  }
+
+  const el = document.getElementById('weekPlan');
+  const weeks = planData.plan;
+  el.innerHTML = Object.entries(weeks).map(([wk, data], i) => `
+    <div class="week-plan-card">
+      <div class="week-plan-header" onclick="toggleWeek(${i})">
+        <div>
+          <div class="week-num">Teden ${i+1}</div>
+          <div class="week-focus">${data.focus}</div>
+        </div>
+        <span id="wkarr-${i}" style="font-size:20px;transition:.2s">›</span>
+      </div>
+      <div class="week-plan-body ${i===0?'open':''}" id="wkbody-${i}">
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px">${data.sessions_per_day}× na dan · ${data.session_length_min} min/seja</div>
+        ${data.tricks.map(t => `
+          <div style="background:var(--mist);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700;font-size:14px">${t.trick_name}</div>
+              <div style="font-size:12px;color:var(--text-muted)">${t.difficulty} · ${t.avg_learning_time}</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:15px;font-weight:800;color:${t.success_probability>=.7?'var(--moss)':t.success_probability>=.5?'var(--gold)':'var(--rust)'}">${Math.round(t.success_probability*100)}%</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function toggleWeek(i) {
+  const body = document.getElementById(`wkbody-${i}`);
+  const arr  = document.getElementById(`wkarr-${i}`);
+  body.classList.toggle('open');
+  arr.style.transform = body.classList.contains('open') ? 'rotate(90deg)' : '';
+}
+
+function buildWeekGrid() {
+  const days = ['Pon','Tor','Sre','Čet','Pet','Sob','Ned'];
+  const todayJs = new Date().getDay();
+  const todayIdx = [6,0,1,2,3,4,5][todayJs]; // Mon=0
+  const el = document.getElementById('weekGrid');
+  el.innerHTML = days.map((d,i) => `
+    <div class="week-day">
+      <div class="week-label ${i===todayIdx?'today':''}">${d}</div>
+      <div class="week-cell ${i<todayIdx?'done':''} ${i===todayIdx?'today-cell':''}">
+        ${i<todayIdx?'✓':i===todayIdx?'<div style="width:8px;height:8px;background:#fff;border-radius:50%"></div>':''}
+      </div>
+    </div>`).join('');
+}
+
+function buildTodayCard(tricks) {
+  if (!tricks || !tricks.length) return;
+  const top = tricks[0];
+  document.getElementById('todayTitle').textContent = `${top.trick_name} — ${top.ease_label}`;
+  document.getElementById('todayDesc').textContent =
+    `AI priporoča danes začeti z "${top.trick_name}". Pričakovani čas učenja: ${top.avg_learning_time}.`;
+}
+
+function buildQuickChips() {
+  const chips = ['Kako začnem trening?','Pes ne uboga', 'Kateri priboljšek?','Kako dolga seja?','Pes vleče povodec'];
+  document.getElementById('quickChips').innerHTML = chips.map(c =>
+    `<button class="quick-chip" onclick="sendQuick('${c}')">${c}</button>`).join('');
+}
+
+// ─── TABS ───
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['tricks','plan','ai'][i] === id);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(`tab-${id}`).classList.add('active');
+}
+
+// ─── AI CHAT ───
+let chatLoading = false;
+
+function sendQuick(text) {
+  document.getElementById('chatInput').value = text;
+  switchTab('ai');
+  sendChat();
+}
+
+function askAI(e, trickName) {
+  e.stopPropagation();
+  const q = `Kako naučim ${state.dogName||'psa'} (${state.breed}) triku "${trickName}"? Kateri pristop je najboljši glede na osebnost?`;
+  document.getElementById('chatInput').value = q;
+  switchTab('ai');
+  sendChat();
+}
+
+async function sendChat() {
+  if (chatLoading) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  chatLoading = true;
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('chatSendBtn').disabled = true;
+
+  appendMsg('user', text);
+  state.chatHistory.push({ role:'user', content:text });
+
+  // Typing indicator
+  const typingId = 'typing-' + Date.now();
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML += `<div class="msg msg-typing" id="${typingId}"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const res = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ messages: state.chatHistory, dog_profile: buildProfile() }),
+    });
+
+    const typing = document.getElementById(typingId);
+    let aiDiv = document.createElement('div');
+    aiDiv.className = 'msg msg-ai';
+    aiDiv.textContent = '';
+    if (typing) typing.replaceWith(aiDiv);
+    else msgs.appendChild(aiDiv);
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let full = '';
+
+    while(true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value);
+      const lines = chunk.split('\n');
+      for (const line of lines) {
+        if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+          try {
+            const d = JSON.parse(line.slice(6));
+            full += d.text;
+            aiDiv.textContent = full;
+            msgs.scrollTop = msgs.scrollHeight;
+          } catch {}
+        }
+      }
+    }
+    state.chatHistory.push({ role:'assistant', content: full });
+  } catch(e) {
+    const typing = document.getElementById(typingId);
+    if(typing) typing.remove();
+    appendMsg('ai', 'Oprostite, prišlo je do napake. Prosim poskusite znova.');
+  }
+
+  chatLoading = false;
+  document.getElementById('chatSendBtn').disabled = false;
+}
+
+function appendMsg(role, text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role}`;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+</script>
+</body>
+</html>
