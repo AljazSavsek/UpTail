@@ -1,0 +1,33 @@
+{
+  "features": [
+    "trainability",
+    "intelligence",
+    "stubbornness",
+    "sensitivity",
+    "energy",
+    "trick_diff",
+    "trick_min_train",
+    "trick_min_intel",
+    "age_months",
+    "owner_exp",
+    "food_motivated",
+    "play_motivated",
+    "praise_motivated",
+    "clicker_used"
+  ],
+  "method_labels": {
+    "0": "lure",
+    "1": "lure_food",
+    "2": "shaping",
+    "3": "guidance"
+  },
+  "ease_thresholds": {
+    "Zelo enostavno": 0.8,
+    "Enostavno": 0.65,
+    "Srednje": 0.45,
+    "Zahtevno": 0.28,
+    "Zelo zahtevno": 0.0
+  },
+  "mae": 0.0617,
+  "method_accuracy": 0.987
+}

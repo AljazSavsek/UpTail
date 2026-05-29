@@ -1,0 +1,875 @@
+[
+  {
+    "trick_name": "Sit",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": null,
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-3 sessions",
+    "notes": "Foundation command - teach first",
+    "min_train_num": 1,
+    "min_intel_num": 1,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Lure metoda",
+        "best_for": "Vse pasme, začetniki",
+        "steps": "1. Drži priboljšek pred nosom psa\n2. Počasi premakni roke nazaj čez glavo\n3. Pes bo naravno sedel\n4. Takoj ko sede: 'Yes!' + nagrada\n5. Dodaj besedo 'Sit' preden začneš\n6. Postopno zmanjšuj lure"
+      },
+      {
+        "method_name": "Capture metoda",
+        "best_for": "Inteligentne pasme",
+        "steps": "1. Čakaj da pes sede sam\n2. Takoj: 'Yes!' + nagrada\n3. Ponovi 10-20x\n4. Dodaj 'Sit' tik preden pričakuješ vedenje\n5. Vadi dokler ni zanesljiv"
+      }
+    ]
+  },
+  {
+    "trick_name": "Down",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit",
+    "ideal_reward": "Food",
+    "avg_learning_time": "2-5 sessions",
+    "notes": "More submissive than Sit - can be harder for dominant dogs",
+    "min_train_num": 1,
+    "min_intel_num": 1,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Lure iz Sit",
+        "best_for": "Večina pasem",
+        "steps": "1. Začni s psom v Sit\n2. Drži priboljšek pred nosom\n3. Počasi premakni roke navzdol do tal\n4. Premakni malo naprej\n5. Ko se komolci dotaknejo tal: 'Yes!' + nagrada\n6. Postopno zmanjšuj lure"
+      },
+      {
+        "method_name": "Shaping metoda",
+        "best_for": "Inteligentne, motivirane pasme",
+        "steps": "1. Začni s psom v Sit\n2. Nagradi vsak gib navzdol (naklon glave, pokrčitev)\n3. Postopno zahtevaj več\n4. Nagradi samo bližje Down položaju\n5. Dodaj ukaz ko je vedenje zanesljivo"
+      }
+    ]
+  },
+  {
+    "trick_name": "Stay",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit",
+    "ideal_reward": "Praise",
+    "avg_learning_time": "1-2 weeks",
+    "notes": "Build duration gradually - start with 5 seconds",
+    "min_train_num": 2,
+    "min_intel_num": 2,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Duration metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Pes v Sit ali Down\n2. Reci 'Stay' z dlanjo proti psu\n3. Počakaj 2 sekundi, nato nagradi\n4. Postopno povečuj: 5, 10, 20 sekund\n5. Dodaj razdaljo šele ko je trajanje zanesljivo\n6. Vadi release besedo ('OK' ali 'Free')"
+      }
+    ]
+  },
+  {
+    "trick_name": "Come",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit",
+    "ideal_reward": "Food + Praise",
+    "avg_learning_time": "2-4 weeks",
+    "notes": "Never punish after recall - always positive",
+    "min_train_num": 2,
+    "min_intel_num": 2,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Recall metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Začni na kratki razdalji (1 meter)\n2. Pokleči, odpri roke, veselo reci 'Come!'\n3. Ko pride: velika nagrada + pohvala\n4. Nikoli ne kaznuj po recall\n5. Postopno povečuj razdaljo\n6. Vadi z dolgim povodcem"
+      },
+      {
+        "method_name": "Igra recall",
+        "best_for": "Pasme z visoko igrivostjo",
+        "steps": "1. Pokaži igračo\n2. Teci stran od psa medtem ko kličeš 'Come!'\n3. Ko pride, igraj se z njim 10 sekund\n4. Menjaj hrano in igro kot nagrado"
+      }
+    ]
+  },
+  {
+    "trick_name": "Leave It",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": "Essential for safety - practice with increasingly tempting items",
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Dve roki metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Priboljšek v zaprto pest\n2. Pes bo lizal, grizal pest - ignoriraj\n3. Ko odneha: 'Yes!' + nagrada iz DRUGE roke\n4. Ponovi, dodaj 'Leave it'\n5. Postopno prehodi na tla, nato sprehod"
+      },
+      {
+        "method_name": "Napredna Leave It",
+        "best_for": "Pasme z visoko trenabilnostjo",
+        "steps": "1. Priboljšek na tla, pokrij z nogo\n2. Ko pes odneha od noge: nagradi\n3. Postopno odkrivaj priboljšek\n4. Vadi z različnimi predmeti\n5. Dodaj vadi med sprehodom"
+      }
+    ]
+  },
+  {
+    "trick_name": "Drop It",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Leave It",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Trade metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Ko ima pes predmet v gobcu\n2. Ponudi visoko vreden priboljšek pred nosom\n3. Ko spusti: 'Yes!' + nagrada\n4. Vrni predmet - tako ne bo bojeval\n5. Dodaj 'Drop it' preden ponudiš menjavo"
+      },
+      {
+        "method_name": "Two toy metoda",
+        "best_for": "Pasme ki radi igrajo fetch",
+        "steps": "1. Igraj se z igračo 1\n2. Pokaži igračo 2 in reci 'Drop it'\n3. Ko spusti igračo 1: vrzi igračo 2\n4. Menjajte igrači\n5. Postopno dodajaj zamudo pred metom"
+      }
+    ]
+  },
+  {
+    "trick_name": "Watch Me",
+    "category": "Focus",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": null,
+    "ideal_reward": "Food",
+    "avg_learning_time": "3-7 sessions",
+    "notes": null,
+    "min_train_num": 2,
+    "min_intel_num": 2,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Lure na oči",
+        "best_for": "Vse pasme",
+        "steps": "1. Priboljšek pri nosu psa\n2. Počasi premakni prst do svojih oči\n3. Ko vzpostavi očesni kontakt: 'Yes!' + nagrada\n4. Začni z 1 sekundo, podaljšuj\n5. Dodaj 'Watch me' preden premakneš prst"
+      }
+    ]
+  },
+  {
+    "trick_name": "Touch",
+    "category": "Target Training",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": null,
+    "ideal_reward": "Food",
+    "avg_learning_time": "2-4 sessions",
+    "notes": null,
+    "min_train_num": 1,
+    "min_intel_num": 2,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Target stick metoda",
+        "best_for": "Vse pasme, odlično za začetek",
+        "steps": "1. Iztegni dlan pred psov nos (10 cm)\n2. Pes bo ovonhal - takoj: 'Yes!' + nagrada\n3. Ponovi 10x\n4. Premakni dlan v različne položaje\n5. Dodaj 'Touch' preden iztegneš dlan\n6. Postopno povečuj razdaljo"
+      }
+    ]
+  },
+  {
+    "trick_name": "Heel",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit, Stay",
+    "ideal_reward": "Food + Praise",
+    "avg_learning_time": "3-6 weeks",
+    "notes": "Requires patience - use high-value treats",
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Lure metoda",
+        "best_for": "Hrana motivirane pasme",
+        "steps": "1. Priboljšek pri levi nogi (višina psovega nosa)\n2. Naredi korak - če pes sledi: nagradi\n3. Postopno dodajaj korake\n4. Dodaj 'Heel' ukaz\n5. Vadi zavoje in spremembe tempa"
+      },
+      {
+        "method_name": "Penalty yards",
+        "best_for": "Psi ki vlečejo",
+        "steps": "1. Hodi naprej\n2. Ko pes vleče: takoj se ustavi\n3. Vrni se 5 korakov nazaj\n4. Začni znova\n5. Ponavljaj - pes se nauči da vlečenje = nazaj\n6. Nagradi hojo ob nogi"
+      }
+    ]
+  },
+  {
+    "trick_name": "Wait",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit, Stay",
+    "ideal_reward": "Praise",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Door metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Pri vratih: 'Wait'\n2. Odpri vrata malo - če pes gre mimo, zapri\n3. Ponavljaj dokler ne čaka\n4. Nagradi čakanje, nato 'OK' za sprostitev\n5. Povečuj trajanje in distrakcije"
+      }
+    ]
+  },
+  {
+    "trick_name": "No",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": null,
+    "ideal_reward": "Praise",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 2,
+    "min_intel_num": 2,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Redirect metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Ko pes dela neželjeno vedenje: 'No' (mirno)\n2. Takoj preusmeri na željeno vedenje\n3. Nagradi željeno vedenje\n4. Ne ponavljaj 'No' večkrat\n5. Budi dosledni vsi v družini"
+      }
+    ]
+  },
+  {
+    "trick_name": "Stand",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit",
+    "ideal_reward": "Food",
+    "avg_learning_time": "2-5 sessions",
+    "notes": null,
+    "min_train_num": 2,
+    "min_intel_num": 2,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Lure metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Pes v Sit\n2. Priboljšek pred nosom, premakni ravno naprej\n3. Ko vstane: 'Yes!' + nagrada\n4. Dodaj 'Stand' preden premakneš lure\n5. Vadi iz Sit in Down"
+      }
+    ]
+  },
+  {
+    "trick_name": "Place/Go to Bed",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Sit, Stay",
+    "ideal_reward": "Praise",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Shaping na podlogo",
+        "best_for": "Vse pasme",
+        "steps": "1. Postavi podlogo/blazino\n2. Nagradi vsak korak proti podlogi\n3. Nato nagradi samo ko stopi na podlogo\n4. Nato nagradi samo Down na podlogi\n5. Dodaj 'Place' ukaz\n6. Postopno povečuj trajanje"
+      }
+    ]
+  },
+  {
+    "trick_name": "Settle",
+    "category": "Obedience",
+    "difficulty": "Beginner",
+    "difficulty_num": 1,
+    "prerequisites": "Down, Stay",
+    "ideal_reward": "Praise",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Capture metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Ko se pes ulegel sam: 'Yes!' + nagrada\n2. Ponavljaj\n3. Dodaj 'Settle' preden se uleže\n4. Vadi v mirnem okolju\n5. Postopno vadi ob distrakcijah"
+      }
+    ]
+  },
+  {
+    "trick_name": "Shake/Paw",
+    "category": "Fun Tricks",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Sit",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-3 sessions",
+    "notes": null,
+    "min_train_num": 2,
+    "min_intel_num": 2,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Lure tačko",
+        "best_for": "Vse pasme",
+        "steps": "1. Pes v Sit\n2. Priboljšek v zaprto pest pred tačko\n3. Pes bo skušal dobiti - ko dvigne tačko: 'Yes!'\n4. Odpri pest in nagradi\n5. Dodaj 'Shake' ko tačka pride v tvojo roko"
+      },
+      {
+        "method_name": "Capture metoda",
+        "best_for": "Pasme ki pogosto dvigajo tačke",
+        "steps": "1. Čakaj da pes sam dvigne tačko\n2. Takoj: 'Yes!' + nagrada\n3. Dodaj 'Shake' preden dvigne\n4. Prosi za tačko z iztegnjeno roko"
+      }
+    ]
+  },
+  {
+    "trick_name": "High Five",
+    "category": "Fun Tricks",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Shake",
+    "ideal_reward": "Food + Play",
+    "avg_learning_time": "3-7 sessions",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 2,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Iz Shake",
+        "best_for": "Psi ki znajo Shake",
+        "steps": "1. Začni s Shake\n2. Postopno premikaj dlan višje\n3. Ko tačka doseže višino roke: 'Yes!'\n4. Dodaj 'High five' ukaz\n5. Vadi obe tački"
+      }
+    ]
+  },
+  {
+    "trick_name": "Roll Over",
+    "category": "Fun Tricks",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Down",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Lure metoda",
+        "best_for": "Večina pasem",
+        "steps": "1. Začni z Down\n2. Priboljšek pri nosu, premakni v lok do hrbta\n3. Pes bo sledil in se zavrtel\n4. 'Yes!' ko se popolnoma zavrne\n5. Dodaj 'Roll over'\n6. Vadi počasi - nikoli na trdi podlagi"
+      }
+    ]
+  },
+  {
+    "trick_name": "Play Dead",
+    "category": "Fun Tricks",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Down",
+    "ideal_reward": "Food + Praise",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Lure na bok",
+        "best_for": "Večina pasem",
+        "steps": "1. Začni z Down\n2. Priboljšek pri nosu, lure na bok\n3. Ko leži na boku: 'Yes!' + nagrada\n4. Dodaj dramatičen 'Bang!'\n5. Zahtevaj daljše 'mrtve' ležanje\n6. Dodaj vstajanje na 'Živiš!'"
+      }
+    ]
+  },
+  {
+    "trick_name": "Spin",
+    "category": "Fun Tricks",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Stand",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-3 sessions",
+    "notes": null,
+    "min_train_num": 2,
+    "min_intel_num": 2,
+    "energy_required": 4,
+    "methods": [
+      {
+        "method_name": "Lure krog",
+        "best_for": "Vse pasme",
+        "steps": "1. Priboljšek pri nosu\n2. Počasi naredi krog (v smeri urinega kazalca)\n3. Ko naredi cel krog: 'Yes!' + nagrada\n4. Dodaj 'Spin'\n5. Nauči obe smeri ('Spin' in 'Twist')"
+      }
+    ]
+  },
+  {
+    "trick_name": "Crawl",
+    "category": "Fun Tricks",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Down",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Lure pod nogo",
+        "best_for": "Strpne pasme",
+        "steps": "1. Pes v Down\n2. Sede na tla, iztegni nogo\n3. Lure priboljšek pod nogo\n4. Pes mora plaziti pod nogo\n5. Postopno dviguj nogo\n6. Dodaj 'Crawl'"
+      }
+    ]
+  },
+  {
+    "trick_name": "Speak",
+    "category": "Communication",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": null,
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": "Only teach if you can teach Quiet",
+    "min_train_num": 2,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Capture lajanje",
+        "best_for": "Pasme ki radi lajajo",
+        "steps": "1. Počakaj na naravno lajanje\n2. Takoj: 'Yes!' + nagrada\n3. Dodaj 'Speak' preden zahlaja\n4. Nauči 'Tiho' hkrati\n5. Nikoli ne uči Speak brez Tiho"
+      },
+      {
+        "method_name": "Trigger metoda",
+        "best_for": "Psi ki lajajo na zvonec",
+        "steps": "1. Pozvoni zvonec\n2. Ko zahlaja: 'Yes!' + nagrada\n3. Dodaj 'Speak' preden pozvoniš\n4. Postopno zmanjšuj trigger"
+      }
+    ]
+  },
+  {
+    "trick_name": "Quiet",
+    "category": "Communication",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Speak",
+    "ideal_reward": "Praise",
+    "avg_learning_time": "2-3 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 4,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Tiho metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Najprej nauči Speak\n2. Ko lajai: 'Tiho' (mirno, enkrat)\n3. Počakaj sekundo tišine\n4. Takoj: 'Yes!' + nagrada\n5. Postopno podaljšuj tišino\n6. Nikoli ne kričite - misli da lajate skupaj"
+      }
+    ]
+  },
+  {
+    "trick_name": "Back Up",
+    "category": "Movement",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Stand",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Hodimo nazaj",
+        "best_for": "Vse pasme",
+        "steps": "1. Stoj pred psom\n2. Počasi hodi proti njemu\n3. Pes bo natural stopil nazaj\n4. 'Yes!' + nagrada\n5. Dodaj 'Back' ukaz\n6. Postopno dodaj gesture z roko"
+      }
+    ]
+  },
+  {
+    "trick_name": "Weave Through Legs",
+    "category": "Movement",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Heel",
+    "ideal_reward": "Food",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 4,
+    "energy_required": 4,
+    "methods": [
+      {
+        "method_name": "Lure med nogami",
+        "best_for": "Srednje in male pasme",
+        "steps": "1. Stoj z razmaknjenimi nogami\n2. Lure med nogami (zig-zag)\n3. 'Yes!' ko naredi en prehod\n4. Postopno poveži prehode\n5. Dodaj 'Weave' ukaz\n6. Hodi naprej med vajenjem"
+      }
+    ]
+  },
+  {
+    "trick_name": "Figure 8",
+    "category": "Movement",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Heel",
+    "ideal_reward": "Food + Praise",
+    "avg_learning_time": "3-6 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 4,
+    "energy_required": 4,
+    "methods": []
+  },
+  {
+    "trick_name": "Circle",
+    "category": "Movement",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Spin",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 4,
+    "methods": []
+  },
+  {
+    "trick_name": "Take a Bow",
+    "category": "Fun Tricks",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Stand",
+    "ideal_reward": "Food + Praise",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Lure poklon",
+        "best_for": "Vse pasme",
+        "steps": "1. Pes v Stand\n2. Lure navzdol med sprednjimi nogami\n3. Ko sprednji del gre dol (zadek gor): 'Yes!'\n4. Dodaj 'Bow'\n5. Zahtevaj daljši poklon"
+      }
+    ]
+  },
+  {
+    "trick_name": "Fetch",
+    "category": "Retrieving",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Come, Drop It",
+    "ideal_reward": "Play",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 4,
+    "methods": [
+      {
+        "method_name": "Two toy metoda",
+        "best_for": "Pasme z nagоnom za prinašanje",
+        "steps": "1. Igraj se z igračo 1\n2. Vrzi igračo 1\n3. Ko jo prinese, pokaži igračo 2\n4. Ko spusti igračo 1: vrzi igračo 2\n5. Postopno dodaj 'Fetch' ukaz\n6. Vadi prinašanje v roke"
+      },
+      {
+        "method_name": "Shaping fetch",
+        "best_for": "Pasme brez naravnega nagona",
+        "steps": "1. Nagradi gledanje igrače\n2. Nagradi hoditi do igrače\n3. Nagradi dotik z nosom\n4. Nagradi vzeti v gobec\n5. Nagradi hoditi z igračo\n6. Nagradi prinesti v roke"
+      }
+    ]
+  },
+  {
+    "trick_name": "Bring It",
+    "category": "Retrieving",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Fetch",
+    "ideal_reward": "Play",
+    "avg_learning_time": "4-8 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 4,
+    "energy_required": 4,
+    "methods": []
+  },
+  {
+    "trick_name": "Give",
+    "category": "Retrieving",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Drop It",
+    "ideal_reward": "Food",
+    "avg_learning_time": "1-2 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Trade metoda",
+        "best_for": "Vse pasme",
+        "steps": "1. Ko ima predmet v gobcu\n2. Ponudi priboljšek\n3. Ko spusti: 'Yes!' + nagrada\n4. Dodaj 'Give' ukaz\n5. Vadi z različnimi predmeti"
+      }
+    ]
+  },
+  {
+    "trick_name": "Hold",
+    "category": "Retrieving",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Sit",
+    "ideal_reward": "Food",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 4,
+    "energy_required": 3,
+    "methods": []
+  },
+  {
+    "trick_name": "Carry",
+    "category": "Retrieving",
+    "difficulty": "Intermediate",
+    "difficulty_num": 2,
+    "prerequisites": "Hold, Fetch",
+    "ideal_reward": "Food + Praise",
+    "avg_learning_time": "4-8 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 5,
+    "energy_required": 4,
+    "methods": []
+  },
+  {
+    "trick_name": "Walk Backwards",
+    "category": "Movement",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Back Up",
+    "ideal_reward": "Food + Clicker",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 4,
+    "energy_required": 4,
+    "methods": []
+  },
+  {
+    "trick_name": "Side Step",
+    "category": "Movement",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Back Up",
+    "ideal_reward": "Food + Clicker",
+    "avg_learning_time": "3-6 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 5,
+    "energy_required": 4,
+    "methods": []
+  },
+  {
+    "trick_name": "Skateboard",
+    "category": "Agility",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Stand, Balance",
+    "ideal_reward": "Food + Play",
+    "avg_learning_time": "2-4 months",
+    "notes": "Start with stationary board - add movement slowly",
+    "min_train_num": 5,
+    "min_intel_num": 5,
+    "energy_required": 4,
+    "methods": [
+      {
+        "method_name": "Postopno navajanje",
+        "best_for": "Drzne, energične pasme",
+        "steps": "1. Nagrajuj samo bližanje deski\n2. Nagrajuj dotik deske\n3. Nagrajuj stopanje na desko\n4. Potisni desko malo - nagradi\n5. Postopno povečuj razdaljo\n6. Vadi na ravni površini"
+      }
+    ]
+  },
+  {
+    "trick_name": "Jump Through Hoop",
+    "category": "Agility",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Sit, Stay",
+    "ideal_reward": "Play",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 4,
+    "methods": [
+      {
+        "method_name": "Postopno dviganje",
+        "best_for": "Energične pasme",
+        "steps": "1. Drži obroč na tleh\n2. Lure skozi obroč: 'Yes!'\n3. Postopno dviguj obroč\n4. Dodaj 'Hoop' ukaz\n5. Vadi brez lure"
+      }
+    ]
+  },
+  {
+    "trick_name": "Jump Over Hurdle",
+    "category": "Agility",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Come",
+    "ideal_reward": "Play",
+    "avg_learning_time": "1-3 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 3,
+    "energy_required": 4,
+    "methods": []
+  },
+  {
+    "trick_name": "Balance Treat on Nose",
+    "category": "Impulse Control",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Stay, Leave It",
+    "ideal_reward": "Food (delayed)",
+    "avg_learning_time": "2-4 weeks",
+    "notes": "Builds impressive impulse control",
+    "min_train_num": 4,
+    "min_intel_num": 4,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Stay + leave it",
+        "best_for": "Pasme z dobrim Stay",
+        "steps": "1. Pes mora znati Stay in Leave it\n2. Daj priboljšek na nos\n3. 'Stay' - sekundo, nato 'OK'\n4. Pes bo vrgel in ujel priboljšek\n5. Postopno povečuj čas\n6. Vadi z lahkimi predmeti najprej"
+      }
+    ]
+  },
+  {
+    "trick_name": "Find It (Scent Work)",
+    "category": "Scent Work",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Sit, Stay",
+    "ideal_reward": "Food + Praise",
+    "avg_learning_time": "4-8 weeks",
+    "notes": null,
+    "min_train_num": 3,
+    "min_intel_num": 4,
+    "energy_required": 3,
+    "methods": [
+      {
+        "method_name": "Hide and seek",
+        "best_for": "Vse pasme, posebej hrti in lovske",
+        "steps": "1. Pokaži priboljšek, vrzi pred psa\n2. 'Find it!' ko gre iskat\n3. Postopno skrivaj pod kozarcem\n4. Nato v sobi\n5. Nato zunaj\n6. Dodaj specifičen vonj (nogavica)"
+      }
+    ]
+  },
+  {
+    "trick_name": "Go Find Person",
+    "category": "Scent Work",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Come, Find It",
+    "ideal_reward": "Praise + Play",
+    "avg_learning_time": "2-3 months",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 5,
+    "energy_required": 3,
+    "methods": []
+  },
+  {
+    "trick_name": "Ring Bell",
+    "category": "Service Skills",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Touch",
+    "ideal_reward": "Food + Clicker",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 3,
+    "energy_required": 2,
+    "methods": [
+      {
+        "method_name": "Touch na zvonec",
+        "best_for": "Psi ki znajo Touch",
+        "steps": "1. Namesti zvonec na vrata\n2. Lure nos do zvonca\n3. Ko se dotakne in zazvoní: 'Yes!' + takoj ven\n4. Dodaj 'Bell' ukaz\n5. Vadi pred vsakim izhodom"
+      }
+    ]
+  },
+  {
+    "trick_name": "Close Door",
+    "category": "Service Skills",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Touch",
+    "ideal_reward": "Food + Clicker",
+    "avg_learning_time": "3-6 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 4,
+    "energy_required": 3,
+    "methods": []
+  },
+  {
+    "trick_name": "Open Door",
+    "category": "Service Skills",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Touch, Pull",
+    "ideal_reward": "Food + Clicker",
+    "avg_learning_time": "2-3 months",
+    "notes": null,
+    "min_train_num": 5,
+    "min_intel_num": 5,
+    "energy_required": 3,
+    "methods": []
+  },
+  {
+    "trick_name": "Turn Off Light",
+    "category": "Service Skills",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Touch",
+    "ideal_reward": "Food + Clicker",
+    "avg_learning_time": "2-4 weeks",
+    "notes": null,
+    "min_train_num": 4,
+    "min_intel_num": 4,
+    "energy_required": 2,
+    "methods": []
+  },
+  {
+    "trick_name": "Tidy Up Toys",
+    "category": "Service Skills",
+    "difficulty": "Advanced",
+    "difficulty_num": 3,
+    "prerequisites": "Fetch, Drop It",
+    "ideal_reward": "Food + Play",
+    "avg_learning_time": "2-4 months",
+    "notes": null,
+    "min_train_num": 5,
+    "min_intel_num": 5,
+    "energy_required": 4,
+    "methods": [
+      {
+        "method_name": "Fetch v škatlo",
+        "best_for": "Psi ki znajo Fetch in Drop",
+        "steps": "1. Postavi škatlo za igrače\n2. Drži igračo nad škatlo\n3. 'Drop it' ko je nad škatlo\n4. Postopno pes sam prinese igračo\n5. Dodaj 'Pospravi' ukaz\n6. Vadi z več igračami"
+      }
+    ]
+  }
+]

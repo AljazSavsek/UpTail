@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="sl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UpTail — AI Trening Psov</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── MODERNA DESIGN SISTEM BAZA ── */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --bg-main: #f8fafc;
+        --bg-card: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --primary: #4f46e5;
+        --primary-hover: #4338ca;
+        --primary-light: #eef2ff;
+        --accent-success: #10b981;
+        --accent-warning: #f59e0b;
+        --accent-danger: #ef4444;
+        --accent-info: #06b6d4;
+        --border-color: #e2e8f0;
+        --radius-lg: 16px;
+        --radius-md: 12px;
+        --radius-sm: 8px;
+        --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        --shadow-lg:
+          0 10px 15px -3px rgba(15, 23, 42, 0.05),
+          0 4px 6px -4px rgba(15, 23, 42, 0.05);
+        --transition: all 0.2s ease-in-out;
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        min-height: 100vh;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── HEADER NEPREMIČNINA ── */
+      .site-header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 60px 24px 48px;
+        text-align: center;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+      }
+      .site-header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -20%;
+        width: 60%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(79, 70, 229, 0.15) 0%,
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .logo-wrap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 16px;
+        border-radius: 24px;
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: var(--shadow-lg);
+      }
+      .site-header p {
+        color: #94a3b8;
+        font-size: 1.15rem;
+        font-weight: 500;
+        margin-bottom: 32px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .stat-pill {
+        background: rgba(255, 255, 255, 0.06);
+        color: #f1f5f9;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border-radius: var(--radius-md);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        min-width: 130px;
+        backdrop-filter: blur(4px);
+        transition: var(--transition);
+      }
+      .stat-pill:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+      .stat-pill span {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-top: 4px;
+        background: linear-gradient(to right, #ffffff, #cbd5e1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* ── NAVIGACIJA / TABS ── */
+      .page {
+        max-width: 1100px;
+        margin: -24px auto 60px;
+        padding: 0 24px;
+        position: relative;
+        z-index: 10;
+      }
+      .tabs {
+        display: flex;
+        background: #ffffff;
+        padding: 8px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        gap: 6px;
+        margin-bottom: 24px;
+        border: 1px solid var(--border-color);
+        overflow-x: auto;
+      }
+      .tab-btn {
+        flex: 1;
+        background: transparent;
+        color: var(--text-muted);
+        border: none;
+        padding: 14px 16px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: var(--radius-md);
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: var(--transition);
+      }
+      .tab-btn:hover {
+        color: var(--text-main);
+        background: var(--bg-main);
+      }
+      .tab-btn.active {
+        background: var(--primary);
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+      }
+
+      /* ── STRANI / PANELS ── */
+      .panel {
+        display: none;
+        background: var(--bg-card);
+        padding: 40px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+      }
+      .panel.active {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .panel h2 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: var(--text-main);
+        margin-bottom: 32px;
+        position: relative;
+        padding-bottom: 12px;
+        border-bottom: 2px solid var(--bg-main);
+      }
+      .panel h2::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        background: var(--primary);
+        border-radius: 2px;
+      }
+
+      /* ── OBRAZCI / FORMS ── */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .field label {
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--text-main);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .field input[type="text"],
+      .field select {
+        padding: 12px 16px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        border-radius: var(--radius-sm);
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--text-main);
+        width: 100%;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+      }
+      .field input[type="text"]:focus,
+      .field select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+      }
+      .field-full {
+        grid-column: 1/-1;
+      }
+      .checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 4px;
+      }
+      .cb-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+      }
+      .cb-label:hover {
+        background: var(--bg-main);
+        border-color: #cbd5e1;
+      }
+      .cb-label input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+
+      /* ── GUMBI / BUTTONS ── */
+      .btn {
+        background: var(--primary);
+        color: #ffffff;
+        border: none;
+        padding: 14px 28px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 700;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+      }
+      .btn:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px -1px rgba(79, 70, 229, 0.25);
+      }
+      .btn:active {
+        transform: translateY(0);
+      }
+      .btn:disabled {
+        background: #cbd5e1;
+        color: #94a3b8;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* ── OBVESTILA / ALERTS ── */
+      .alert {
+        padding: 16px 20px;
+        border-radius: var(--radius-md);
+        margin-bottom: 24px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid transparent;
+      }
+      .alert-info {
+        background: #ecfdf5;
+        border-color: #a7f3d0;
+        color: #065f46;
+        background-color: var(--primary-light);
+        border-color: #c7d2fe;
+        color: #3730a3;
+      }
+      .alert-warn {
+        background: #fffbef;
+        border-color: #fde68a;
+        color: #92400e;
+      }
+      .alert-err {
+        background: #fef2f2;
+        border-color: #fca5a5;
+        color: #991b1b;
+      }
+      .alert-ok {
+        background: #ecfdf5;
+        border-color: #a7f3d0;
+        color: #065f46;
+      }
+
+      /* ── PASMA BAR / BREED INFO BAR ── */
+      .breed-bar {
+        background: #1e293b;
+        color: #ffffff;
+        padding: 18px 24px;
+        border-radius: var(--radius-md);
+        margin-bottom: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        box-shadow: var(--shadow-md);
+      }
+      .breed-bar strong {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-right: 8px;
+      }
+      .breed-bar .chip {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* ── TRICKS KARTICE GRID ── */
+      .tricks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+      }
+      .trick-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 24px;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+      }
+      .trick-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: #cbd5e1;
+      }
+      .trick-card .tc-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 12px;
+      }
+      .tc-meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .tag {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .tag-ok {
+        background: #e6fbf1;
+        color: #0d9488;
+      }
+      .tag-mid {
+        background: #fffbeb;
+        color: #d97706;
+      }
+      .tag-hard {
+        background: #fef2f2;
+        color: #e11d48;
+      }
+      .tag-info {
+        background: #f0fdfa;
+        color: #0284c7;
+      }
+
+      /* Napredek bar */
+      .bar-wrap {
+        background: var(--bg-main);
+        border-radius: 20px;
+        height: 20px;
+        margin: 12px 0 16px;
+        overflow: hidden;
+        padding: 2px;
+        border: 1px solid var(--border-color);
+      }
+      .bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary) 0%, #6366f1 100%);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 0.75rem;
+        min-width: 36px;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Metode podrobnosti box */
+      .method-box {
+        background: var(--bg-main);
+        border-radius: var(--radius-sm);
+        padding: 16px;
+        margin-top: auto;
+        border-left: 4px solid var(--primary);
+      }
+      .method-box h4 {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        margin-bottom: 6px;
+      }
+      .method-box p {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        white-space: pre-line;
+        line-height: 1.6;
+      }
+      .method-box .for-whom {
+        margin-top: 10px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border-color);
+        padding-top: 8px;
+        font-style: italic;
+      }
+
+      /* ── NAČRT TRENINGA / PLAN ── */
+      .plan-notes {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: var(--radius-md);
+        padding: 20px 24px;
+        margin-bottom: 28px;
+        color: #92400e;
+      }
+      .plan-notes h3 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .plan-notes ul {
+        list-style-position: inside;
+      }
+      .plan-notes li {
+        margin-bottom: 4px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .week-block {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        margin-bottom: 24px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+      .week-head {
+        background: #1e293b;
+        color: #ffffff;
+        padding: 16px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .week-head h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+      .week-meta {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 4px 12px;
+        border-radius: 20px;
+      }
+      .week-body {
+        padding: 20px 24px;
+        display: grid;
+        gap: 12px;
+        background: #ffffff;
+      }
+      .plan-trick {
+        background: var(--bg-main);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        padding: 14px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        transition: var(--transition);
+      }
+      .plan-trick:hover {
+        border-color: #cbd5e1;
+        background: #f1f5f9;
+      }
+      .plan-trick strong {
+        font-size: 0.95rem;
+        color: var(--text-main);
+      }
+      .plan-trick .pt-right {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+
+      /* ── CHAT SVETALEC ── */
+      .chat-wrap {
+        display: flex;
+        flex-direction: column;
+        height: 550px;
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+      }
+      .chat-msgs {
+        flex: 1;
+        overflow-y: auto;
+        background: #f1f5f9;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .msg {
+        padding: 14px 20px;
+        border-radius: var(--radius-md);
+        max-width: 80%;
+        line-height: 1.6;
+        font-size: 0.95rem;
+        box-shadow: var(--shadow-sm);
+        animation: chatFade 0.2s ease-out;
+      }
+      @keyframes chatFade {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .msg-user {
+        background: var(--primary);
+        color: #ffffff;
+        margin-left: auto;
+        border-bottom-right-radius: 2px;
+      }
+      .msg-bot {
+        background: #ffffff;
+        color: var(--text-main);
+        margin-left: 0;
+        border-bottom-left-radius: 2px;
+        border: 1px solid var(--border-color);
+      }
+      .chat-row {
+        display: flex;
+        gap: 12px;
+        padding: 20px 24px;
+        background: #ffffff;
+        border-top: 1px solid var(--border-color);
+      }
+      .chat-row input {
+        flex: 1;
+        padding: 14px 18px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-main);
+        border-radius: var(--radius-sm);
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--text-main);
+        transition: var(--transition);
+      }
+      .chat-row input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+      }
+      .chat-row .btn {
+        padding: 14px 28px;
+        border-radius: var(--radius-sm);
+      }
+      .typing {
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* ── LOADING SPINNER ── */
+      .spinner-wrap {
+        padding: 60px 24px;
+        text-align: center;
+      }
+      .spinner {
+        width: 44px;
+        height: 44px;
+        border: 3.5px solid var(--primary-light);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 16px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ── NO PROFILE NOTICE ── */
+      .no-profile {
+        padding: 60px 24px;
+        text-align: center;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+      .no-profile p {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+        font-weight: 500;
+      }
+      .no-profile .btn {
+        width: auto;
+      }
+
+      @media (max-width: 680px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .panel {
+          padding: 24px 16px;
+        }
+        .site-header {
+          padding: 40px 16px 40px;
+        }
+        .logo-wrap img {
+          width: 120px !important;
+          height: 120px !important;
+        }
+        .msg {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="logo-wrap">
+        <img
+          src="/static/uptail.png"
+          alt="UpTail"
+          style="width: 160px; height: 160px; object-fit: contain"
+        />
+      </div>
+      <p>AI Platforma za Personaliziran Trening Psov</p>
+      <div class="stats-row" id="statsRow">
+        <div class="stat-pill">Model<span id="s-mae">—</span></div>
+        <div class="stat-pill">Pasme<span id="s-breeds">—</span></div>
+        <div class="stat-pill">Triki<span id="s-tricks">—</span></div>
+        <div class="stat-pill">Vzorci<span id="s-samples">—</span></div>
+      </div>
+    </header>
+
+    <div class="page">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="profil">📝 Profil</button>
+        <button class="tab-btn" data-tab="priporocila">🎯 Priporočila</button>
+        <button class="tab-btn" data-tab="nacrt">📅 Načrt</button>
+        <button class="tab-btn" data-tab="svetovalec">💬 Svetovalec</button>
+      </div>
+
+      <!-- ─── PROFIL ─── -->
+      <div class="panel active" id="tab-profil">
+        <h2>Ustvarite Profil Psa</h2>
+        <div id="profile-err"></div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Ime psa</label>
+            <input type="text" id="f-name" placeholder="npr. Max, Bella…" />
+          </div>
+          <div class="field">
+            <label>Pasma *</label>
+            <input
+              type="text"
+              id="f-breed"
+              list="breed-list"
+              placeholder="Začnite tipkati…"
+              required
+            />
+            <datalist id="breed-list"></datalist>
+          </div>
+          <div class="field">
+            <label>Starost</label>
+            <select id="f-age">
+              <option value="3">3 mesece — Mladič</option>
+              <option value="6">6 mesecev — Mladič</option>
+              <option value="12" selected>12 mesecev — Mlad</option>
+              <option value="24">2 leti — Odrasel</option>
+              <option value="36">3 leta — Odrasel</option>
+              <option value="48">4 leta — Odrasel</option>
+              <option value="60">5 let — Odrasel</option>
+              <option value="84">7 let — Starejši</option>
+              <option value="108">9+ let — Starejši</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Vaše izkušnje</label>
+            <select id="f-exp">
+              <option value="1">Začetnik — prvi pes</option>
+              <option value="2" selected>Vmesne izkušnje</option>
+              <option value="3">Izkušen trener</option>
+            </select>
+          </div>
+          <div class="field field-full">
+            <label>Kaj vašega psa motivira?</label>
+            <div class="checkboxes">
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-food" checked /> 🍖 Hrana</label
+              >
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-play" /> 🎾 Igra</label
+              >
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-praise" /> 👏 Pohvala</label
+              >
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-clicker" /> 🔊 Clicker</label
+              >
+            </div>
+          </div>
+          <div class="field field-full" style="margin-top: 8px">
+            <button class="btn" id="save-btn" onclick="saveProfile()">
+              Shrani profil →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PRIPOROČILA ─── -->
+      <div class="panel" id="tab-priporocila">
+        <h2>Priporočila Trikov</h2>
+        <div id="rec-content">
+          <div class="no-profile">
+            <p>Najprej izpolnite profil psa.</p>
+            <button class="btn" onclick="goTab('profil')">
+              Pojdi na Profil
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── NAČRT ─── -->
+      <div class="panel" id="tab-nacrt">
+        <h2>4-Tedenski Načrt Treninga</h2>
+        <div id="plan-content">
+          <div class="no-profile">
+            <p>Najprej izpolnite profil psa.</p>
+            <button class="btn" onclick="goTab('profil')">
+              Pojdi na Profil
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SVETOVALEC ─── -->
+      <div class="panel" id="tab-svetovalec">
+        <h2>AI Svetovalec</h2>
+        <div class="alert alert-info" style="margin-bottom: 20px">
+          <div>
+            <strong>Vprašajte karkoli o treningu.</strong> Primeri: "Kako naučim
+            Sit?", "Pes vleče na povodcu", "Kaj motivira Border Collie?"
+          </div>
+        </div>
+        <div class="chat-wrap">
+          <div class="chat-msgs" id="chat-msgs"></div>
+          <div class="chat-row">
+            <input
+              type="text"
+              id="chat-in"
+              placeholder="Vaše vprašanje o treningu…"
+              onkeydown="if (event.key === 'Enter') sendMsg();"
+            />
+            <button class="btn" id="chat-send" onclick="sendMsg()">
+              Pošlji
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      "use strict";
+
+      /* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+      let profile = null;
+
+      /* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+      (async function init() {
+        // Load breeds
+        try {
+          const r = await fetch("/api/breeds");
+          const d = await r.json();
+          const dl = document.getElementById("breed-list");
+          d.breeds.forEach((b) => {
+            const o = document.createElement("option");
+            o.value = b;
+            dl.appendChild(o);
+          });
+        } catch (e) {
+          console.warn("Breeds load failed:", e);
+        }
+
+        // Load model stats
+        try {
+          const r = await fetch("/api/model-info");
+          const d = await r.json();
+          document.getElementById("s-mae").textContent =
+            ((1 - d.mae) * 100).toFixed(1) + "%";
+          document.getElementById("s-breeds").textContent = d.n_breeds;
+          document.getElementById("s-tricks").textContent = d.n_tricks;
+          document.getElementById("s-samples").textContent =
+            d.training_samples.toLocaleString();
+        } catch (e) {
+          console.warn("Model info failed:", e);
+        }
+
+        // Chat welcome
+        appendMsg(
+          "Pozdravljeni! 🐾 Sem UpTail AI svetovalec. Ustvarite profil v zavihku <strong>Profil</strong>, nato mi postavite vprašanje.",
+          "bot",
+        );
+      })();
+
+      /* ══════════════════════════════════════
+   TABS
+══════════════════════════════════════ */
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => goTab(btn.dataset.tab));
+      });
+
+      function goTab(name) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.toggle("active", p.id === "tab-" + name));
+
+        if (name === "priporocila" && profile) loadRec();
+        if (name === "nacrt" && profile) loadPlan();
+      }
+
+      /* ══════════════════════════════════════
+   PROFILE
+══════════════════════════════════════ */
+      function saveProfile() {
+        const breed = document.getElementById("f-breed").value.trim();
+        const name = document.getElementById("f-name").value.trim();
+        const errEl = document.getElementById("profile-err");
+
+        if (!breed) {
+          errEl.innerHTML =
+            '<div class="alert alert-err">Prosim, vnesite pasmo psa.</div>';
+          return;
+        }
+        errEl.innerHTML = "";
+
+        profile = {
+          dog_name: name || "Vaš pes",
+          breed: breed,
+          age_months: parseInt(document.getElementById("f-age").value),
+          owner_experience: parseInt(document.getElementById("f-exp").value),
+          food_motivated: document.getElementById("cb-food").checked,
+          play_motivated: document.getElementById("cb-play").checked,
+          praise_motivated: document.getElementById("cb-praise").checked,
+          clicker_used: document.getElementById("cb-clicker").checked,
+        };
+
+        // Show success then switch
+        errEl.innerHTML =
+          '<div class="alert alert-ok">✅ Profil shranjen za <strong>' +
+          esc(profile.dog_name) +
+          "</strong> (" +
+          esc(breed) +
+          "). Nalagam priporočila…</div>";
+        setTimeout(() => goTab("priporocila"), 600);
+      }
+
+      /* ══════════════════════════════════════
+   RECOMMENDATIONS
+══════════════════════════════════════ */
+      async function loadRec() {
+        const el = document.getElementById("rec-content");
+        el.innerHTML = spinner();
+
+        try {
+          const r = await fetch("/api/recommend", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(profile),
+          });
+          if (!r.ok) throw new Error("Server vrnil " + r.status);
+          const d = await r.json();
+          if (!d.tricks || !d.tricks.length)
+            throw new Error("Ni podatkov o trikih.");
+
+          const bi = d.breed_info;
+          let html = `
+      <div class="breed-bar">
+        <strong>${esc(bi.breed_name)}</strong>
+        <span class="chip">Skupina: ${esc(bi.group || "—")}</span>
+        <span class="chip">Trenabilnost: ${bi.trainability_score}/5</span>
+        <span class="chip">Inteligenca: ${bi.intelligence_score}/5</span>
+        <span class="chip">Energija: ${esc(bi.energy_level || "—")}</span>
+        <span class="chip">Trmavost: ${bi.stubbornness}/10</span>
+      </div>
+      <div class="tricks-grid">`;
+
+          d.tricks.forEach((t) => {
+            const pct = Math.round(t.success_probability * 100);
+            const tag = pct >= 65 ? "ok" : pct >= 45 ? "mid" : "hard";
+            const pre = t.prerequisites
+              ? `<p style="margin:8px 0;font-size:.88rem;color:var(--accent-danger)">⚠️ Predpogoji: <strong>${esc(t.prerequisites)}</strong></p>`
+              : "";
+            const meth = t.best_method
+              ? `
+        <div class="method-box">
+          <h4>Metoda: ${esc(t.best_method)}</h4>
+          <p>${esc(t.method_steps || "").replace(/\n/g, "<br>")}</p>
+          ${t.method_best_for ? `<div class="for-whom">Primerno za: ${esc(t.method_best_for)}</div>` : ""}
+        </div>`
+              : "";
+
+            html += `
+        <div class="trick-card">
+          <div class="tc-name">${esc(t.trick_name)}</div>
+          <div class="tc-meta">
+            <span class="tag tag-info">${esc(t.category)}</span>
+            <span class="tag tag-${tag}">${esc(t.ease_label)}</span>
+          </div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%">${pct}%</div></div>
+          <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:12px">Pričakovane seje: ~${t.expected_sessions}</p>
+          ${pre}${meth}
+        </div>`;
+          });
+
+          html += "</div>";
+          el.innerHTML = html;
+        } catch (e) {
+          el.innerHTML = `<div class="alert alert-err">❌ Napaka pri nalaganju priporočil: <strong>${esc(e.message)}</strong><br>
+      Preverite, da strežnik teče na portu 5001 in da je pasma pravilno vnesena.</div>`;
+        }
+      }
+
+      /* ══════════════════════════════════════
+   TRAINING PLAN
+══════════════════════════════════════ */
+      async function loadPlan() {
+        const el = document.getElementById("plan-content");
+        el.innerHTML = spinner();
+
+        try {
+          const r = await fetch("/api/training-plan", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ dog_profile: profile }),
+          });
+          if (!r.ok) throw new Error("Server vrnil " + r.status);
+          const d = await r.json();
+
+          let html = "";
+
+          if (d.breed_notes && d.breed_notes.length) {
+            html += `<div class="plan-notes"><h3>🎯 Nasveti za pasmo:</h3><ul>`;
+            d.breed_notes.forEach((n) => {
+              html += `<li>${esc(n)}</li>`;
+            });
+            html += "</ul></div>";
+          }
+
+          const weekLabels = {
+            week_1: "TEDEN 1",
+            week_2: "TEDEN 2",
+            week_3: "TEDEN 3",
+            week_4: "TEDEN 4",
+          };
+          Object.entries(d.plan).forEach(([key, w]) => {
+            html += `
+        <div class="week-block">
+          <div class="week-head">
+            <h3>${weekLabels[key] || key} — ${esc(w.focus)}</h3>
+            <span class="week-meta">${w.sessions_per_day}× dnevno &middot; ${w.session_length_min} min/sejo</span>
+          </div>
+          <div class="week-body">`;
+            (w.tricks || []).forEach((t) => {
+              const pct = Math.round(t.success_probability * 100);
+              html += `
+            <div class="plan-trick">
+              <strong>${esc(t.trick_name)}</strong>
+              <span class="pt-right">${esc(t.ease_label)} &middot; ${pct}% &middot; ~${t.expected_sessions} sej</span>
+            </div>`;
+            });
+            html += `</div></div>`;
+          });
+
+          el.innerHTML = html;
+        } catch (e) {
+          el.innerHTML = `<div class="alert alert-err">❌ Napaka pri nalaganju načrta: <strong>${esc(e.message)}</strong></div>`;
+        }
+      }
+
+      /* ══════════════════════════════════════
+   CHAT  (plain JSON, no SSE)
+══════════════════════════════════════ */
+      async function sendMsg() {
+        if (!profile) {
+          appendMsg(
+            "Prosim, najprej ustvarite profil psa v zavihku 📝 Profil.",
+            "bot",
+          );
+          return;
+        }
+
+        const input = document.getElementById("chat-in");
+        const btn = document.getElementById("chat-send");
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = "";
+        appendMsg(text, "user");
+
+        // Typing indicator
+        const typingId = "typing-" + Date.now();
+        appendRaw(
+          `<div class="msg msg-bot typing" id="${typingId}"><span>.</span><span>.</span><span>.</span></div>`,
+        );
+
+        btn.disabled = true;
+
+        try {
+          const r = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              messages: [{ role: "user", content: text }],
+              dog_profile: profile,
+            }),
+          });
+
+          const el = document.getElementById(typingId);
+          if (el) el.remove();
+
+          if (!r.ok) throw new Error("Server vrnil " + r.status);
+
+          const d = await r.json();
+          const reply = (d.reply || "").trim();
+
+          if (!reply) throw new Error("Prazen odgovor strežnika.");
+          appendMsg(reply, "bot");
+        } catch (e) {
+          const el = document.getElementById(typingId);
+          if (el) el.remove();
+          appendMsg("❌ Napaka: " + e.message, "bot");
+        } finally {
+          btn.disabled = false;
+          input.focus();
+        }
+      }
+
+      /* ══════════════════════════════════════
+   HELPERS
+══════════════════════════════════════ */
+      function appendMsg(text, who) {
+        const msgs = document.getElementById("chat-msgs");
+        const div = document.createElement("div");
+        div.className = "msg msg-" + (who === "user" ? "user" : "bot");
+        // Bold **text** and line breaks
+        div.innerHTML = esc(text)
+          .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+
+      function appendRaw(html) {
+        const msgs = document.getElementById("chat-msgs");
+        msgs.insertAdjacentHTML("beforeend", html);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+
+      function spinner() {
+        return '<div class="spinner-wrap"><div class="spinner"></div><p style="color:var(--text-muted); font-weight:500;">Nalagam…</p></div>';
+      }
+
+      function esc(s) {
+        if (s == null) return "";
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="sl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UpTail — AI Trening Psov</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --black: #000;
+        --white: #fff;
+        --grey: #f4f4f4;
+        --mid: #e0e0e0;
+        --accent: #000;
+        --radius: 0px;
+        --border: 2.5px solid #000;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: #000;
+        min-height: 100vh;
+        color: #000;
+      }
+
+      /* ── HEADER ── */
+      .site-header {
+        background: #000;
+        padding: 36px 24px 28px;
+        text-align: center;
+        border-bottom: 3px solid #fff;
+      }
+      .logo-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 10px;
+      }
+      .logo-wrap svg {
+        width: 60px;
+        height: 60px;
+      }
+      .logo-wrap h1 {
+        font-family: "Fraunces", serif;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 1px;
+      }
+      .site-header p {
+        color: #aaa;
+        font-size: 1.05rem;
+        margin-bottom: 24px;
+      }
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .stat-pill {
+        background: #fff;
+        color: #000;
+        padding: 8px 20px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border: none;
+      }
+      .stat-pill span {
+        display: block;
+        font-size: 1.4rem;
+        font-family: "Fraunces", serif;
+        font-weight: 900;
+      }
+
+      /* ── LAYOUT ── */
+      .page {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      /* ── TABS ── */
+      .tabs {
+        display: flex;
+        gap: 0;
+        margin-bottom: 0;
+        border-bottom: 3px solid #fff;
+      }
+      .tab-btn {
+        flex: 1;
+        background: #000;
+        color: #aaa;
+        border: none;
+        border-right: 2px solid #fff;
+        padding: 16px 8px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .tab-btn:last-child {
+        border-right: none;
+      }
+      .tab-btn:hover {
+        background: #111;
+        color: #fff;
+      }
+      .tab-btn.active {
+        background: #fff;
+        color: #000;
+      }
+
+      /* ── PANELS ── */
+      .panel {
+        display: none;
+        background: #fff;
+        padding: 36px 32px;
+        border: 3px solid #fff;
+        border-top: none;
+      }
+      .panel.active {
+        display: block;
+      }
+      .panel h2 {
+        font-family: "Fraunces", serif;
+        font-size: 1.9rem;
+        font-weight: 900;
+        border-bottom: 3px solid #000;
+        padding-bottom: 12px;
+        margin-bottom: 28px;
+      }
+
+      /* ── FORM ── */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      @media (max-width: 680px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .field label {
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .field input,
+      .field select {
+        padding: 13px 14px;
+        border: var(--border);
+        background: #fff;
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        width: 100%;
+      }
+      .field input:focus,
+      .field select:focus {
+        outline: none;
+        background: #f9f9f9;
+      }
+      .field-full {
+        grid-column: 1/-1;
+      }
+      .checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .cb-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border: var(--border);
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background 0.15s;
+      }
+      .cb-label:hover {
+        background: #f0f0f0;
+      }
+      .cb-label input {
+        width: 17px;
+        height: 17px;
+        accent-color: #000;
+      }
+
+      /* ── BUTTONS ── */
+      .btn {
+        background: #000;
+        color: #fff;
+        border: var(--border);
+        padding: 16px 32px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          color 0.15s;
+        width: 100%;
+      }
+      .btn:hover {
+        background: #222;
+      }
+      .btn:disabled {
+        background: #888;
+        border-color: #888;
+        cursor: not-allowed;
+      }
+
+      /* ── ALERTS ── */
+      .alert {
+        padding: 16px 20px;
+        border: var(--border);
+        margin-bottom: 24px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .alert-info {
+        background: #f0f0f0;
+      }
+      .alert-warn {
+        background: #fff9db;
+        border-color: #c8a800;
+      }
+      .alert-err {
+        background: #ffe5e5;
+        border-color: #c00;
+      }
+      .alert-ok {
+        background: #e8f8e8;
+        border-color: #0a0;
+      }
+
+      /* ── BREED INFO BAR ── */
+      .breed-bar {
+        background: #000;
+        color: #fff;
+        padding: 14px 18px;
+        margin-bottom: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+      .breed-bar strong {
+        font-family: "Fraunces", serif;
+        font-size: 1.1rem;
+        margin-right: 8px;
+      }
+      .breed-bar .chip {
+        background: #fff;
+        color: #000;
+        padding: 4px 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      /* ── TRICKS GRID ── */
+      .tricks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
+      }
+      .trick-card {
+        border: var(--border);
+        padding: 22px;
+        transition: transform 0.15s;
+      }
+      .trick-card:hover {
+        transform: translateY(-3px);
+      }
+      .trick-card .tc-name {
+        font-family: "Fraunces", serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+        margin-bottom: 12px;
+      }
+      .tc-meta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .tag {
+        padding: 5px 10px;
+        border: 2px solid #000;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .tag-ok {
+        background: #d4f4dd;
+      }
+      .tag-mid {
+        background: #fff9db;
+      }
+      .tag-hard {
+        background: #ffe5e5;
+      }
+      .tag-info {
+        background: #e3f2fd;
+      }
+      .bar-wrap {
+        border: 2px solid #000;
+        height: 26px;
+        background: #e0e0e0;
+        margin: 10px 0;
+      }
+      .bar-fill {
+        height: 100%;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 900;
+        font-size: 0.85rem;
+        min-width: 36px;
+        transition: width 0.4s;
+      }
+      .method-box {
+        background: #f4f4f4;
+        border: 2px solid #000;
+        padding: 14px;
+        margin-top: 12px;
+      }
+      .method-box h4 {
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .method-box p {
+        font-size: 0.9rem;
+        white-space: pre-line;
+        line-height: 1.65;
+        color: #222;
+      }
+      .method-box .for-whom {
+        margin-top: 8px;
+        font-size: 0.82rem;
+        color: #555;
+        border-top: 1px solid #ccc;
+        padding-top: 8px;
+      }
+
+      /* ── PLAN ── */
+      .plan-notes {
+        background: #fff9db;
+        border: var(--border);
+        padding: 18px 20px;
+        margin-bottom: 24px;
+      }
+      .plan-notes h3 {
+        font-family: "Fraunces", serif;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+      .plan-notes li {
+        margin-left: 20px;
+        line-height: 1.7;
+      }
+      .week-block {
+        border: var(--border);
+        margin-bottom: 20px;
+      }
+      .week-head {
+        background: #000;
+        color: #fff;
+        padding: 14px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .week-head h3 {
+        font-family: "Fraunces", serif;
+        font-size: 1.15rem;
+        font-weight: 900;
+      }
+      .week-meta {
+        font-size: 0.85rem;
+        color: #ccc;
+      }
+      .week-body {
+        padding: 16px 20px;
+        display: grid;
+        gap: 10px;
+      }
+      .plan-trick {
+        background: #f4f4f4;
+        border: 2px solid #000;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .plan-trick strong {
+        font-size: 1rem;
+      }
+      .plan-trick .pt-right {
+        font-size: 0.85rem;
+        color: #555;
+      }
+
+      /* ── CHAT ── */
+      .chat-wrap {
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+      }
+      .chat-msgs {
+        flex: 1;
+        overflow-y: auto;
+        background: #f4f4f4;
+        border: var(--border);
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+      .msg {
+        margin-bottom: 12px;
+        padding: 12px 16px;
+        border: 2px solid #000;
+        max-width: 82%;
+        line-height: 1.6;
+      }
+      .msg-user {
+        background: #000;
+        color: #fff;
+        margin-left: auto;
+      }
+      .msg-bot {
+        background: #fff;
+      }
+      .chat-row {
+        display: flex;
+        gap: 10px;
+      }
+      .chat-row input {
+        flex: 1;
+        padding: 14px;
+        border: var(--border);
+        font-family: "DM Sans", sans-serif;
+        font-size: 1rem;
+      }
+      .chat-row input:focus {
+        outline: none;
+        background: #f9f9f9;
+      }
+      .chat-row .btn {
+        width: auto;
+        padding: 14px 28px;
+      }
+      .typing {
+        color: #888;
+        font-style: italic;
+        font-size: 0.9rem;
+        padding: 8px 0;
+      }
+
+      /* ── SPINNER ── */
+      .spinner-wrap {
+        padding: 48px;
+        text-align: center;
+      }
+      .spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid #ddd;
+        border-top-color: #000;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 16px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ── NO PROFILE NOTICE ── */
+      .no-profile {
+        padding: 48px;
+        text-align: center;
+      }
+      .no-profile p {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 20px;
+      }
+      .no-profile .btn {
+        display: inline-block;
+        width: auto;
+        padding: 14px 36px;
+      }
+
+      @media (max-width: 600px) {
+        .logo-wrap h1 {
+          font-size: 2.2rem;
+        }
+        .panel {
+          padding: 24px 16px;
+        }
+        .tricks-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="logo-wrap">
+        <img
+          src="/static/uptail.png"
+          alt="UpTail"
+          style="width: 160px; height: 160px; object-fit: contain"
+        />
+      </div>
+      <p>AI Platforma za Personaliziran Trening Psov</p>
+      <div class="stats-row" id="statsRow">
+        <div class="stat-pill">Model<span id="s-mae">—</span></div>
+        <div class="stat-pill">Pasme<span id="s-breeds">—</span></div>
+        <div class="stat-pill">Triki<span id="s-tricks">—</span></div>
+        <div class="stat-pill">Vzorci<span id="s-samples">—</span></div>
+      </div>
+    </header>
+
+    <div class="page">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="profil">📝 Profil</button>
+        <button class="tab-btn" data-tab="priporocila">🎯 Priporočila</button>
+        <button class="tab-btn" data-tab="nacrt">📅 Načrt</button>
+        <button class="tab-btn" data-tab="svetovalec">💬 Svetovalec</button>
+      </div>
+
+      <!-- ─── PROFIL ─── -->
+      <div class="panel active" id="tab-profil">
+        <h2>Ustvarite Profil Psa</h2>
+        <div id="profile-err"></div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Ime psa</label>
+            <input type="text" id="f-name" placeholder="npr. Max, Bella…" />
+          </div>
+          <div class="field">
+            <label>Pasma *</label>
+            <input
+              type="text"
+              id="f-breed"
+              list="breed-list"
+              placeholder="Začnite tipkati…"
+              required
+            />
+            <datalist id="breed-list"></datalist>
+          </div>
+          <div class="field">
+            <label>Starost</label>
+            <select id="f-age">
+              <option value="3">3 mesece — Mladič</option>
+              <option value="6">6 mesecev — Mladič</option>
+              <option value="12" selected>12 mesecev — Mlad</option>
+              <option value="24">2 leti — Odrasel</option>
+              <option value="36">3 leta — Odrasel</option>
+              <option value="48">4 leta — Odrasel</option>
+              <option value="60">5 let — Odrasel</option>
+              <option value="84">7 let — Starejši</option>
+              <option value="108">9+ let — Starejši</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Vaše izkušnje</label>
+            <select id="f-exp">
+              <option value="1">Začetnik — prvi pes</option>
+              <option value="2" selected>Vmesne izkušnje</option>
+              <option value="3">Izkušen trener</option>
+            </select>
+          </div>
+          <div class="field field-full">
+            <label>Kaj vašega psa motivira?</label>
+            <div class="checkboxes">
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-food" checked /> 🍖 Hrana</label
+              >
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-play" /> 🎾 Igra</label
+              >
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-praise" /> 👏 Pohvala</label
+              >
+              <label class="cb-label"
+                ><input type="checkbox" id="cb-clicker" /> 🔊 Clicker</label
+              >
+            </div>
+          </div>
+          <div class="field field-full">
+            <button class="btn" id="save-btn" onclick="saveProfile()">
+              Shrani profil →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PRIPOROČILA ─── -->
+      <div class="panel" id="tab-priporocila">
+        <h2>Priporočila Trikov</h2>
+        <div id="rec-content">
+          <div class="no-profile">
+            <p>Najprej izpolnite profil psa.</p>
+            <button
+              class="btn"
+              onclick="goTab('profil')"
+              style="width: auto; padding: 14px 36px"
+            >
+              Pojdi na Profil
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── NAČRT ─── -->
+      <div class="panel" id="tab-nacrt">
+        <h2>4-Tedenski Načrt Treninga</h2>
+        <div id="plan-content">
+          <div class="no-profile">
+            <p>Najprej izpolnite profil psa.</p>
+            <button
+              class="btn"
+              onclick="goTab('profil')"
+              style="width: auto; padding: 14px 36px"
+            >
+              Pojdi na Profil
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SVETOVALEC ─── -->
+      <div class="panel" id="tab-svetovalec">
+        <h2>AI Svetovalec</h2>
+        <div class="alert alert-info" style="margin-bottom: 16px">
+          <strong>Vprašajte karkoli o treningu.</strong> Primeri: "Kako naučim
+          Sit?", "Pes vleče na povodcu", "Kaj motivira Border Collie?"
+        </div>
+        <div class="chat-wrap">
+          <div class="chat-msgs" id="chat-msgs"></div>
+          <div class="chat-row">
+            <input
+              type="text"
+              id="chat-in"
+              placeholder="Vaše vprašanje o treningu…"
+              onkeydown="if (event.key === 'Enter') sendMsg();"
+            />
+            <button class="btn" id="chat-send" onclick="sendMsg()">
+              Pošlji
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /page -->
+
+    <script>
+      "use strict";
+
+      /* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+      let profile = null;
+
+      /* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+      (async function init() {
+        // Load breeds
+        try {
+          const r = await fetch("/api/breeds");
+          const d = await r.json();
+          const dl = document.getElementById("breed-list");
+          d.breeds.forEach((b) => {
+            const o = document.createElement("option");
+            o.value = b;
+            dl.appendChild(o);
+          });
+        } catch (e) {
+          console.warn("Breeds load failed:", e);
+        }
+
+        // Load model stats
+        try {
+          const r = await fetch("/api/model-info");
+          const d = await r.json();
+          document.getElementById("s-mae").textContent =
+            ((1 - d.mae) * 100).toFixed(1) + "%";
+          document.getElementById("s-breeds").textContent = d.n_breeds;
+          document.getElementById("s-tricks").textContent = d.n_tricks;
+          document.getElementById("s-samples").textContent =
+            d.training_samples.toLocaleString();
+        } catch (e) {
+          console.warn("Model info failed:", e);
+        }
+
+        // Chat welcome
+        appendMsg(
+          "Pozdravljeni! 🐾 Sem UpTail AI svetovalec. Ustvarite profil v zavihku <strong>Profil</strong>, nato mi postavite vprašanje.",
+          "bot",
+        );
+      })();
+
+      /* ══════════════════════════════════════
+   TABS
+══════════════════════════════════════ */
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => goTab(btn.dataset.tab));
+      });
+
+      function goTab(name) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.toggle("active", p.id === "tab-" + name));
+
+        if (name === "priporocila" && profile) loadRec();
+        if (name === "nacrt" && profile) loadPlan();
+      }
+
+      /* ══════════════════════════════════════
+   PROFILE
+══════════════════════════════════════ */
+      function saveProfile() {
+        const breed = document.getElementById("f-breed").value.trim();
+        const name = document.getElementById("f-name").value.trim();
+        const errEl = document.getElementById("profile-err");
+
+        if (!breed) {
+          errEl.innerHTML =
+            '<div class="alert alert-err">Prosim, vnesite pasmo psa.</div>';
+          return;
+        }
+        errEl.innerHTML = "";
+
+        profile = {
+          dog_name: name || "Vaš pes",
+          breed: breed,
+          age_months: parseInt(document.getElementById("f-age").value),
+          owner_experience: parseInt(document.getElementById("f-exp").value),
+          food_motivated: document.getElementById("cb-food").checked,
+          play_motivated: document.getElementById("cb-play").checked,
+          praise_motivated: document.getElementById("cb-praise").checked,
+          clicker_used: document.getElementById("cb-clicker").checked,
+        };
+
+        // Show success then switch
+        errEl.innerHTML =
+          '<div class="alert alert-ok">✅ Profil shranjen za <strong>' +
+          esc(profile.dog_name) +
+          "</strong> (" +
+          esc(breed) +
+          "). Nalagam priporočila…</div>";
+        setTimeout(() => goTab("priporocila"), 600);
+      }
+
+      /* ══════════════════════════════════════
+   RECOMMENDATIONS
+══════════════════════════════════════ */
+      async function loadRec() {
+        const el = document.getElementById("rec-content");
+        el.innerHTML = spinner();
+
+        try {
+          const r = await fetch("/api/recommend", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(profile),
+          });
+          if (!r.ok) throw new Error("Server vrnil " + r.status);
+          const d = await r.json();
+          if (!d.tricks || !d.tricks.length)
+            throw new Error("Ni podatkov o trikih.");
+
+          const bi = d.breed_info;
+          let html = `
+      <div class="breed-bar">
+        <strong>${esc(bi.breed_name)}</strong>
+        <span class="chip">Skupina: ${esc(bi.group || "—")}</span>
+        <span class="chip">Trenabilnost: ${bi.trainability_score}/5</span>
+        <span class="chip">Inteligenca: ${bi.intelligence_score}/5</span>
+        <span class="chip">Energija: ${esc(bi.energy_level || "—")}</span>
+        <span class="chip">Trmavost: ${bi.stubbornness}/10</span>
+      </div>
+      <div class="tricks-grid">`;
+
+          d.tricks.forEach((t) => {
+            const pct = Math.round(t.success_probability * 100);
+            const tag = pct >= 65 ? "ok" : pct >= 45 ? "mid" : "hard";
+            const pre = t.prerequisites
+              ? `<p style="margin:8px 0;font-size:.88rem;color:#555">⚠️ Predpogoji: <strong>${esc(t.prerequisites)}</strong></p>`
+              : "";
+            const meth = t.best_method
+              ? `
+        <div class="method-box">
+          <h4>Metoda: ${esc(t.best_method)}</h4>
+          <p>${esc(t.method_steps || "").replace(/\n/g, "<br>")}</p>
+          ${t.method_best_for ? `<div class="for-whom">Primerno za: ${esc(t.method_best_for)}</div>` : ""}
+        </div>`
+              : "";
+
+            html += `
+        <div class="trick-card">
+          <div class="tc-name">${esc(t.trick_name)}</div>
+          <div class="tc-meta">
+            <span class="tag tag-info">${esc(t.category)}</span>
+            <span class="tag tag-${tag}">${esc(t.ease_label)}</span>
+          </div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%">${pct}%</div></div>
+          <p style="font-size:.88rem;color:#444;margin-bottom:4px">Pričakovane seje: ~${t.expected_sessions}</p>
+          ${pre}${meth}
+        </div>`;
+          });
+
+          html += "</div>";
+          el.innerHTML = html;
+        } catch (e) {
+          el.innerHTML = `<div class="alert alert-err">❌ Napaka pri nalaganju priporočil: <strong>${esc(e.message)}</strong><br>
+      Preverite, da strežnik teče na portu 5001 in da je pasma pravilno vnesena.</div>`;
+        }
+      }
+
+      /* ══════════════════════════════════════
+   TRAINING PLAN
+══════════════════════════════════════ */
+      async function loadPlan() {
+        const el = document.getElementById("plan-content");
+        el.innerHTML = spinner();
+
+        try {
+          const r = await fetch("/api/training-plan", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ dog_profile: profile }),
+          });
+          if (!r.ok) throw new Error("Server vrnil " + r.status);
+          const d = await r.json();
+
+          let html = "";
+
+          if (d.breed_notes && d.breed_notes.length) {
+            html += `<div class="plan-notes"><h3>🎯 Nasveti za pasmo:</h3><ul>`;
+            d.breed_notes.forEach((n) => {
+              html += `<li>${esc(n)}</li>`;
+            });
+            html += "</ul></div>";
+          }
+
+          const weekLabels = {
+            week_1: "TEDEN 1",
+            week_2: "TEDEN 2",
+            week_3: "TEDEN 3",
+            week_4: "TEDEN 4",
+          };
+          Object.entries(d.plan).forEach(([key, w]) => {
+            html += `
+        <div class="week-block">
+          <div class="week-head">
+            <h3>${weekLabels[key] || key} — ${esc(w.focus)}</h3>
+            <span class="week-meta">${w.sessions_per_day}× dnevno &middot; ${w.session_length_min} min/sejo</span>
+          </div>
+          <div class="week-body">`;
+            (w.tricks || []).forEach((t) => {
+              const pct = Math.round(t.success_probability * 100);
+              html += `
+            <div class="plan-trick">
+              <strong>${esc(t.trick_name)}</strong>
+              <span class="pt-right">${esc(t.ease_label)} &middot; ${pct}% &middot; ~${t.expected_sessions} sej</span>
+            </div>`;
+            });
+            html += `</div></div>`;
+          });
+
+          el.innerHTML = html;
+        } catch (e) {
+          el.innerHTML = `<div class="alert alert-err">❌ Napaka pri nalaganju načrta: <strong>${esc(e.message)}</strong></div>`;
+        }
+      }
+
+      /* ══════════════════════════════════════
+   CHAT  (plain JSON, no SSE)
+══════════════════════════════════════ */
+      async function sendMsg() {
+        if (!profile) {
+          appendMsg(
+            "Prosim, najprej ustvarite profil psa v zavihku 📝 Profil.",
+            "bot",
+          );
+          return;
+        }
+
+        const input = document.getElementById("chat-in");
+        const btn = document.getElementById("chat-send");
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = "";
+        appendMsg(text, "user");
+
+        // Typing indicator
+        const typingId = "typing-" + Date.now();
+        appendRaw(`<div class="msg msg-bot typing" id="${typingId}">…</div>`);
+
+        btn.disabled = true;
+
+        try {
+          const r = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              messages: [{ role: "user", content: text }],
+              dog_profile: profile,
+            }),
+          });
+
+          const el = document.getElementById(typingId);
+          if (el) el.remove();
+
+          if (!r.ok) throw new Error("Server vrnil " + r.status);
+
+          const d = await r.json();
+          const reply = (d.reply || "").trim();
+
+          if (!reply) throw new Error("Prazen odgovor strežnika.");
+          appendMsg(reply, "bot");
+        } catch (e) {
+          const el = document.getElementById(typingId);
+          if (el) el.remove();
+          appendMsg("❌ Napaka: " + e.message, "bot");
+        } finally {
+          btn.disabled = false;
+          input.focus();
+        }
+      }
+
+      /* ══════════════════════════════════════
+   HELPERS
+══════════════════════════════════════ */
+      function appendMsg(text, who) {
+        const msgs = document.getElementById("chat-msgs");
+        const div = document.createElement("div");
+        div.className = "msg msg-" + (who === "user" ? "user" : "bot");
+        // Bold **text** and line breaks
+        div.innerHTML = esc(text)
+          .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+
+      function appendRaw(html) {
+        const msgs = document.getElementById("chat-msgs");
+        msgs.insertAdjacentHTML("beforeend", html);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+
+      function spinner() {
+        return '<div class="spinner-wrap"><div class="spinner"></div><p style="color:#666">Nalagam…</p></div>';
+      }
+
+      function esc(s) {
+        if (s == null) return "";
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+    </script>
+  </body>
+</html>
