@@ -190,72 +190,56 @@ GREETINGS = ["zivjo", "hej", "pozdravljeni", "pozdrav", "hello", "hi",
 
 
 def advisor(message, profile):
-    import urllib.request, json as _json
+    # Preden pošljemo zahtevek, poskusimo pridobiti funkcijo get_breed
+    try:
+        breed = get_breed(profile.get("breed", ""))
+    except NameError:
+        breed = {}  # Fallback, če funkcija get_breed ni definirana v vaši kodi
 
-    breed = get_breed(profile.get("breed", ""))
+    # 🔑 Koda prebere ključ neposredno iz okolja (Environment), ki ga nastavi Render
+    api_key = os.environ.get("GROQ_API_KEY")
     
-    prompt = f"""You are UpTail, an AI dog training assistant. Your name is UpTail.
-Always respond in Slovenian. Be direct and answer exactly what was asked.
-Never confuse yourself with the dog.
-
-Dog profile:
-- Name: {profile.get('dog_name', 'unknown')}
-- Breed: {profile.get('breed', 'unknown')}
-- Age: {profile.get('age_months', 12)} months
-- Trainability: {breed.get('trainability_score', 3)}/5
-- Stubbornness: {breed.get('stubbornness', 5)}/10
-- Energy: {breed.get('energy_level', 'Moderate')}
-- Motivated by: {'food ' if profile.get('food_motivated') else ''}{'play ' if profile.get('play_motivated') else ''}{'praise ' if profile.get('praise_motivated') else ''}
-
-Rules:
-- If asked your name: say "Sem UpTail, AI trener psov."
-- If asked about a trick: give exact step by step instructions
-- If asked general question: give short practical advice
-- Never repeat the dog profile back to the user
-- Max 4 sentences
-- Always mention the dog by name: {profile.get('dog_name', 'vaš pes')}
-
-User question: {message}
-
-Answer:"""
-
-    payload = _json.dumps({
-        "model": "mistral",
-        "prompt": prompt,
-        "stream": False,
-        "options": {
-            "num_predict": 200,
-            "temperature": 0.2,
-            "stop": ["\n\n\n", "User question:", "Dog profile:"]
-        }
-    }).encode()
+    # Če ključa ni v okolju, koda takoj sproži napako (lažje za debugiranje)
+    if not api_key:
+        return "Napaka: API ključ 'GROQ_API_KEY' ni nastavljen v okoljskih spremenljivkah na Renderju!"
 
     try:
-        req = urllib.request.Request(
-            "http://localhost:11434/api/generate",
-            data=payload,
-            headers={"Content-Type": "application/json"}
+        r = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={"Authorization": f"Bearer {api_key}"},  # Vstavljen skriti ključ
+            json={
+                "model": "llama-3.3-70b-versatile",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": f"""Ti si UpTail, profesionalni AI trener psov.
+Vedno odgovarjaj v slovenscini. Bodi kratek in konkreten.
+Pes: {profile.get('dog_name','neznan')}, {profile.get('breed','neznan')}, {profile.get('age_months',12)} mesecev
+Trenabilnost: {breed.get('trainability_score',3)}/5, Energija: {breed.get('energy_level','Moderate')}
+Motivacija: {'hrana ' if profile.get('food_motivated') else ''}{'igra ' if profile.get('play_motivated') else ''}{'pohvala' if profile.get('praise_motivated') else ''}
+Pravila: ce te vprasajo ime reci 'Sem UpTail'. Najvec 5 stavkov. Vedno omeni psa po imenu."""
+                    },
+                    {
+                        "role": "user",
+                        "content": message
+                    }
+                ],
+                "max_tokens": 300,
+                "temperature": 0.3
+            },
+            timeout=30
         )
-        resp = urllib.request.urlopen(req, timeout=60)
-        result = _json.loads(resp.read())
-        reply = result.get("response", "").strip()
-        if not reply:
-            raise Exception("empty")
-        return reply
+        return r.json()["choices"][0]["message"]["content"].strip()
 
-    except Exception:
+    except Exception as e:
+        # Če pride do katerekoli druge napake (npr. timeout ali napačen ključ)
         exp = int(profile.get("owner_experience", 1))
-        stub = int(breed.get("stubbornness", 5))
         if exp == 1:
-            return ("Za začetnike priporočam: Sit, Down, Stay, Come.\n"
-                    "Kratke seje (5 min), 2-3x dnevno, vedno pozitivno. "
-                    + ("Trmava pasma - potrpezljivost je kljucna." if stub >= 7
-                       else "Pasma dobro reagira na pozitivno ojacanje."))
+            return ("Za zacetnike priporocam: Sit, Down, Stay, Come.\n"
+                    "Kratke seje (5 min), 2-3x dnevno, vedno pozitivno.")
         return ("Za naprednejsi trening:\n"
                 "- Shaping metoda za kompleksne trike\n"
-                "- Postopno povecevanje distrakcij\n"
-                "- Proofing v razlicnih okoljih")
-
+                "- Postopno povecevanje distrakcij")
 # ── Flask Routes ───────────────────────────────────────────────
 
 @app.route("/")
