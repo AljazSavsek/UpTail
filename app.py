@@ -7,7 +7,7 @@ import os, json, re
 import numpy as np
 import joblib
 from flask import Flask, request, jsonify, render_template
-
+import requests
 app = Flask(__name__)
 
 # ── Pot do modela ──────────────────────────────────────────────
@@ -190,56 +190,52 @@ GREETINGS = ["zivjo", "hej", "pozdravljeni", "pozdrav", "hello", "hi",
 
 
 def advisor(message, profile):
-    # Preden pošljemo zahtevek, poskusimo pridobiti funkcijo get_breed
+    # 1. Preverimo funkcijo get_breed (če ne obstaja, naredimo prazen slovar)
     try:
         breed = get_breed(profile.get("breed", ""))
+        if breed is None:
+            breed = {}
     except NameError:
-        breed = {}  # Fallback, če funkcija get_breed ni definirana v vaši kodi
+        breed = {}
 
-    # 🔑 Koda prebere ključ neposredno iz okolja (Environment), ki ga nastavi Render
+    # 2. Pridobimo ključ iz Render okolja
     api_key = os.environ.get("GROQ_API_KEY")
     
-    # Če ključa ni v okolju, koda takoj sproži napako (lažje za debugiranje)
     if not api_key:
-        return "Napaka: API ključ 'GROQ_API_KEY' ni nastavljen v okoljskih spremenljivkah na Renderju!"
+        return "NAPAKA: Ključ 'GROQ_API_KEY' sploh ni nastavljen v Render Environment!"
 
-    try:
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}"},  # Vstavljen skriti ključ
-            json={
-                "model": "llama-3.3-70b-versatile",
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": f"""Ti si UpTail, profesionalni AI trener psov.
+    # 3. POŠLJEMO ZAHTEVEK (Brez try-except, da vidimo surovo napako)
+    r = requests.post(
+        "https://api.groq.com/openai/v1/chat/completions",
+        headers={"Authorization": f"Bearer {api_key}"},
+        json={
+            "model": "llama-3.3-70b-versatile",
+            "messages": [
+                {
+                    "role": "system",
+                    "content": f"""Ti si UpTail, profesionalni AI trener psov.
 Vedno odgovarjaj v slovenscini. Bodi kratek in konkreten.
 Pes: {profile.get('dog_name','neznan')}, {profile.get('breed','neznan')}, {profile.get('age_months',12)} mesecev
 Trenabilnost: {breed.get('trainability_score',3)}/5, Energija: {breed.get('energy_level','Moderate')}
 Motivacija: {'hrana ' if profile.get('food_motivated') else ''}{'igra ' if profile.get('play_motivated') else ''}{'pohvala' if profile.get('praise_motivated') else ''}
 Pravila: ce te vprasajo ime reci 'Sem UpTail'. Najvec 5 stavkov. Vedno omeni psa po imenu."""
-                    },
-                    {
-                        "role": "user",
-                        "content": message
-                    }
-                ],
-                "max_tokens": 300,
-                "temperature": 0.3
-            },
-            timeout=30
-        )
-        return r.json()["choices"][0]["message"]["content"].strip()
-
-    except Exception as e:
-        # Če pride do katerekoli druge napake (npr. timeout ali napačen ključ)
-        exp = int(profile.get("owner_experience", 1))
-        if exp == 1:
-            return ("Za zacetnike priporocam: Sit, Down, Stay, Come.\n"
-                    "Kratke seje (5 min), 2-3x dnevno, vedno pozitivno.")
-        return ("Za naprednejsi trening:\n"
-                "- Shaping metoda za kompleksne trike\n"
-                "- Postopno povecevanje distrakcij")
+                },
+                {
+                    "role": "user",
+                    "content": message
+                }
+            ],
+            "max_tokens": 300,
+            "temperature": 0.3
+        },
+        timeout=30
+    )
+    
+    # Če API vrne status, ki ni 200 (ok), izpišemo točen razlog od Groq-a
+    if r.status_code != 200:
+        return f"Groq API Napaka (Status {r.status_code}): {r.text}"
+        
+    return r.json()["choices"][0]["message"]["content"].strip()
 # ── Flask Routes ───────────────────────────────────────────────
 
 @app.route("/")
